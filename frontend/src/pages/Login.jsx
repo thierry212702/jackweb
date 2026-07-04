@@ -1,8 +1,9 @@
+// pages/Login.jsx (Humanized Version)
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../context/AuthContext'
-import { FiMail, FiLock, FiLogIn } from 'react-icons/fi'
+import { FiMail, FiLock, FiArrowRight } from 'react-icons/fi'
 
 const Login = () => {
   const [loading, setLoading] = useState(false)
@@ -22,69 +23,90 @@ const Login = () => {
     }
   }
 
-  const inputClass = "w-full pl-12 pr-4 py-4 bg-dark-800/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
+  const inputClass = "w-full px-0 py-4 bg-transparent border-b border-border-light text-charcoal placeholder-taupe focus:border-gold outline-none transition-all duration-500 font-light"
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-dark-950 py-12 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-warm-white py-12 px-4">
       <div className="max-w-md w-full animate-scale-in">
-        <div className="text-center mb-8">
-          <h1 className="font-display text-4xl font-bold text-white mb-2">
-            Welcome Back
-          </h1>
-          <p className="text-dark-400">Sign in to your account</p>
+        <div className="text-center mb-12">
+          <Link to="/" className="inline-block mb-8">
+            <h1 className="font-display text-2xl text-charcoal">Sarah Michelle</h1>
+            <span className="text-xs text-taupe tracking-[0.3em] uppercase">Legal Services</span>
+          </Link>
+          <h2 className="font-display text-3xl text-charcoal mb-2">
+            Welcome back
+          </h2>
+          <p className="text-taupe font-light">
+            Sign in to manage your account
+          </p>
         </div>
 
-        <div className="bg-dark-800/30 backdrop-blur-sm border border-primary-600/10 rounded-2xl p-8">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <div className="bg-white p-10 border border-border-light">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             <div>
-              <label className="block text-sm font-medium text-dark-300 mb-2">Email Address</label>
-              <div className="relative">
-                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-dark-400" />
-                <input
-                  type="email"
-                  {...register('email', { required: 'Email is required' })}
-                  className={inputClass}
-                  placeholder="admin@lawyer.com"
-                />
-              </div>
-              {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>}
+              <label className="block text-xs tracking-[0.2em] uppercase text-taupe mb-3">
+                Email Address
+              </label>
+              <input
+                type="email"
+                {...register('email', { required: 'Please enter your email' })}
+                className={inputClass}
+                placeholder="your@email.com"
+              />
+              {errors.email && (
+                <p className="text-rose text-xs mt-2">{errors.email.message}</p>
+              )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-300 mb-2">Password</label>
-              <div className="relative">
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-dark-400" />
-                <input
-                  type="password"
-                  {...register('password', { required: 'Password is required' })}
-                  className={inputClass}
-                  placeholder="••••••••"
-                />
-              </div>
-              {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password.message}</p>}
+              <label className="block text-xs tracking-[0.2em] uppercase text-taupe mb-3">
+                Password
+              </label>
+              <input
+                type="password"
+                {...register('password', { required: 'Please enter your password' })}
+                className={inputClass}
+                placeholder="••••••••"
+              />
+              {errors.password && (
+                <p className="text-rose text-xs mt-2">{errors.password.message}</p>
+              )}
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 rounded-xl text-white font-semibold disabled:opacity-50 transition-all"
+              className="w-full py-5 bg-gold text-white tracking-[0.2em] uppercase text-sm hover:bg-gold-dark disabled:opacity-50 transition-all duration-500 flex items-center justify-center gap-3"
             >
-              {loading ? 'Signing in...' : <><FiLogIn /> Sign In</>}
+              {loading ? 'Signing in...' : (
+                <>
+                  Sign In
+                  <FiArrowRight />
+                </>
+              )}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-dark-400">
-              Don't have an account?{' '}
-              <Link to="/register" className="text-primary-400 hover:text-primary-300 font-medium">
-                Sign up
+          <div className="mt-8 pt-8 border-t border-border-light text-center">
+            <p className="text-taupe text-sm font-light">
+              New here?{' '}
+              <Link to="/register" className="text-gold hover:text-gold-dark transition-colors">
+                Create an account
               </Link>
             </p>
           </div>
 
-          <div className="mt-4 p-4 bg-dark-800/50 rounded-xl border border-dark-600">
-            <p className="text-sm text-dark-400 text-center">
-              <span className="text-primary-400 font-semibold">Demo Admin:</span> admin@lawyer.com / admin123
+          {/* Help note */}
+          <div className="mt-6 p-4 bg-cream text-center">
+            <p className="text-taupe text-xs font-light">
+              Need assistance?{' '}
+              <a href="tel:+15551234567" className="text-gold hover:text-gold-dark">
+                Call us
+              </a>
+              {' '}or{' '}
+              <a href="mailto:info@sarahmichelle.com" className="text-gold hover:text-gold-dark">
+                email
+              </a>
             </p>
           </div>
         </div>
