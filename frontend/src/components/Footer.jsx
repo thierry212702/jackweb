@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
-    <footer className="bg-chocolate text-white">
+    <footer className="bg-[#4A3728] text-white mt-auto">
       {/* Main Footer */}
-      <div className="max-w-[1400px] mx-auto px-8 lg:px-16 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
           {/* Brand Column */}
           <div className="lg:col-span-4">
-            <Link to="/" className="inline-block mb-6">
-              <h3 className="font-display text-2xl text-white mb-1">
+            <Link to="/" className="inline-block mb-5">
+              <h3 className="text-2xl text-white mb-1" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                 Sarah Michelle
               </h3>
               <span className="text-white/40 text-xs tracking-[0.3em] uppercase">
@@ -25,10 +25,10 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="lg:col-span-2">
-            <h4 className="text-white/70 text-xs tracking-[0.2em] uppercase mb-6 font-medium">
+            <h4 className="text-white/70 text-xs tracking-[0.2em] uppercase mb-5 font-medium">
               Navigation
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5">
               {[
                 { label: 'Home', path: '/' },
                 { label: 'Podcasts', path: '/podcasts' },
@@ -50,10 +50,10 @@ const Footer = () => {
 
           {/* Services */}
           <div className="lg:col-span-3">
-            <h4 className="text-white/70 text-xs tracking-[0.2em] uppercase mb-6 font-medium">
+            <h4 className="text-white/70 text-xs tracking-[0.2em] uppercase mb-5 font-medium">
               Our Services
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5">
               {[
                 { label: 'For Businesses', path: '/businesses' },
                 { label: 'For Individuals', path: '/individuals' },
@@ -75,13 +75,13 @@ const Footer = () => {
 
           {/* Contact */}
           <div className="lg:col-span-3">
-            <h4 className="text-white/70 text-xs tracking-[0.2em] uppercase mb-6 font-medium">
+            <h4 className="text-white/70 text-xs tracking-[0.2em] uppercase mb-5 font-medium">
               Get In Touch
             </h4>
-            <ul className="space-y-4 text-white/40 text-sm font-light">
+            <ul className="space-y-3 text-white/40 text-sm font-light">
               <li>123 Legal Street</li>
               <li>New York, NY 10001</li>
-              <li className="pt-2">
+              <li className="pt-1">
                 <a 
                   href="tel:+15551234567" 
                   className="hover:text-white transition-colors duration-300"
@@ -107,20 +107,17 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-16 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-5">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3">
             <p className="text-white/30 text-xs font-light">
               &copy; 2024 Sarah Michelle Legal Services. All rights reserved.
             </p>
-            <div className="flex gap-8">
+            <div className="flex gap-6">
               <a href="#" className="text-white/30 text-xs hover:text-white/60 transition-colors font-light">
                 Privacy Policy
               </a>
               <a href="#" className="text-white/30 text-xs hover:text-white/60 transition-colors font-light">
                 Terms of Service
-              </a>
-              <a href="#" className="text-white/30 text-xs hover:text-white/60 transition-colors font-light">
-                Cookie Policy
               </a>
             </div>
           </div>
