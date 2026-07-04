@@ -36,13 +36,13 @@ const Home = () => {
             {/* Hero Content */}
             <div className="animate-slide-left">
               <p className="text-gold text-sm tracking-[0.3em] uppercase mb-6">
-                Distinguished Legal Practice
+                Distinguished Legal services
               </p>
               
               <h1 className="font-display text-5xl lg:text-7xl font-light text-charcoal leading-[1.1] mb-8">
-                Legal counsel
+                REPUTATIONAL
                 <br />
-                of <span className="italic text-gold">distinction</span>
+                BUILT <span className="italic text-gold">ON EXPERIENCE</span>
               </h1>
               
               <p className="text-taupe text-lg leading-relaxed mb-12 max-w-lg font-light">
