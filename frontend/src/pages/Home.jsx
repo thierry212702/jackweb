@@ -139,9 +139,9 @@ const Home = () => {
             <div className="max-w-2xl">
               <h1 className="text-white text-5xl lg:text-6xl xl:text-7xl leading-[1.1] mb-6" 
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                Belfast's law<br />
+                MACJACK's law<br />
                 firm of choice<br />
-                for over 200 years
+                for over trust
               </h1>
               <Link
                 to="/about"

@@ -37,7 +37,7 @@ const Navbar = () => {
           <Link to="/" className="flex items-center gap-2">
             <h1 className="text-xl lg:text-2xl text-[#1a1a1a] font-medium" 
               style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-              Sarah Michelle
+              JACK GENTIL
             </h1>
             <span className="hidden sm:block text-xs text-gray-400 tracking-[0.2em] uppercase">
               Legal Services
