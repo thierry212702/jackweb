@@ -4,16 +4,16 @@
 :root {
   --cream: #F5F0EB;
   --warm-white: #FAFAF8;
-  --charcoal: #2D2D2D;
-  --soft-black: #1A1A1A;
+  --charcoal: #fafafa;
+  --soft-black: #ffffff;
   --gold: #C4A962;
   --gold-light: #D4BC7A;
   --gold-dark: #A68A3E;
   --taupe: #8B7D6B;
   --sage: #9CAF88;
   --rose: #C49B94;
-  --border-light: rgba(0, 0, 0, 0.08);
-  --shadow-elegant: 0 2px 20px rgba(0, 0, 0, 0.04);
+  --border-light: rgba(249, 247, 247, 0.08);
+  --shadow-elegant: 0 2px 20px rgb(253, 255, 255);
   --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
