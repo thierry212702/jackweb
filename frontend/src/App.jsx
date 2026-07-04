@@ -15,6 +15,8 @@ import PodcastManagement from './pages/admin/PodcastManagement'
 import BookManagement from './pages/admin/BookManagement'
 import UserManagement from './pages/admin/UserManagement'
 import ProtectedRoute from './components/ProtectedRoute'
+import Businesses from './pages/Businesses'
+import Individuals from './pages/Individuals'
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
       <main className="flex-grow pt-20">
         <Routes>
           {/* Public Routes */}
+          <Route path="/businesses" element={<Businesses />} />
+<Route path="/individuals" element={<Individuals />} />
           <Route path="/" element={<Home />} />
           <Route path="/podcasts" element={<Podcasts />} />
           <Route path="/podcasts/:id" element={<PodcastDetail />} />
