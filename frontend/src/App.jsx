@@ -18,7 +18,7 @@ import PodcastManagement from './pages/admin/PodcastManagement'
 import BookManagement from './pages/admin/BookManagement'
 import UserManagement from './pages/admin/UserManagement'
 import ProtectedRoute from './components/ProtectedRoute'
-
+import About from './pages/About'
 function App() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -36,6 +36,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/businesses" element={<Businesses />} />
           <Route path="/individuals" element={<Individuals />} />
+          <Route path="/about" element={<About />} />
           
           {/* Admin Routes */}
           <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
