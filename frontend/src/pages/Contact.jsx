@@ -19,9 +19,9 @@ const Contact = () => {
   const locations = [
     {
       name: 'Rubavu Office',
-      address: 'Avenue de la Paix, Rubavu, Western Province, Rwanda',
-      phone: '+250 788 123 456',
-      email: 'rubavu@sarahmichelle.com',
+      address: 'gisenyi, Rubavu, Western Province, Rwanda',
+      phone: '+250 798 822 311',
+      email: 'niyonsabajackgentil@gmail.com',
       hours: 'Mon–Fri: 8:30 AM – 5:30 PM',
       lat: -1.6792,
       lng: 29.2584,
@@ -30,8 +30,8 @@ const Contact = () => {
     {
       name: 'Kigali Office',
       address: 'KG 7 Avenue, Nyarugenge, Kigali, Rwanda',
-      phone: '+250 788 234 567',
-      email: 'kigali@sarahmichelle.com',
+      phone: '+250 798 822 311',
+      email: 'niyonsabajackgentil@gmail.com',
       hours: 'Mon–Fri: 8:00 AM – 6:00 PM',
       lat: -1.9441,
       lng: 30.0619,
@@ -40,8 +40,8 @@ const Contact = () => {
     {
       name: 'Musanze Office',
       address: 'RN4 Road, Musanze, Northern Province, Rwanda',
-      phone: '+250 788 345 678',
-      email: 'musanze@sarahmichelle.com',
+      phone: '+250 798 822 311',
+      email: 'niyonsabajackgentil@gmail.com',
       hours: 'Mon–Fri: 8:30 AM – 5:00 PM',
       lat: -1.4999,
       lng: 29.6349,
@@ -248,7 +248,7 @@ const Contact = () => {
                     href="tel:+442890243126" 
                     className="text-lg text-[#C4956A] hover:text-[#1a1a1a] transition-colors block ml-16"
                   >
-                    +44 (0)28 9024 3126
+                    +25(0) 798 822 311
                   </a>
                 </div>
 
