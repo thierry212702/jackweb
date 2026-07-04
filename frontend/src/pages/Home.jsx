@@ -1,8 +1,8 @@
+// pages/Home.jsx
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { FiPlay, FiBook, FiArrowRight, FiShield, FiUsers, FiAward, FiStar, FiChevronRight } from 'react-icons/fi'
+import { FiArrowRight, FiPlay } from 'react-icons/fi'
 import { podcastAPI, bookAPI } from '../services/api'
-import LoadingSpinner from '../components/LoadingSpinner'
 
 const Home = () => {
   const [podcasts, setPodcasts] = useState([])
@@ -27,237 +27,170 @@ const Home = () => {
     fetchData()
   }, [])
 
-  const stats = [
-    { icon: FiShield, number: '15+', label: 'Years Experience' },
-    { icon: FiUsers, number: '2000+', label: 'Clients Served' },
-    { icon: FiAward, number: '98%', label: 'Success Rate' },
-    { icon: FiStar, number: '500+', label: '5-Star Reviews' },
-  ]
-
-  if (loading) return <LoadingSpinner />
-
   return (
     <div className="overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center bg-dark-950 overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary-600/10 to-transparent" />
-          <div className="absolute bottom-0 left-0 w-1/2 h-full bg-gradient-to-r from-primary-900/20 to-transparent" />
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="particle absolute w-1 h-1 bg-primary-500 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                bottom: '-10px',
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${3 + Math.random() * 4}s`
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Hero Text */}
-            <div className="animate-slide-in-left">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600/10 border border-primary-600/20 rounded-full mb-6">
-                <span className="w-2 h-2 bg-primary-400 rounded-full animate-pulse" />
-                <span className="text-sm text-primary-400 font-medium">Free Consultation Available</span>
-              </div>
-              
-              <h1 className="font-display text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
-                Expert Legal{' '}
-                <span className="bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent">
-                  Guidance
-                </span>
-                <br />
-                For Your Peace of Mind
-              </h1>
-              
-              <p className="text-lg text-dark-400 mb-8 max-w-lg leading-relaxed">
-                Navigate complex legal challenges with confidence. 
-                Professional legal services tailored to your unique needs.
+      {/* Hero Section - Maclaines Style */}
+      <section className="relative min-h-screen flex items-center bg-warm-white">
+        <div className="max-w-[1400px] mx-auto px-8 lg:px-16 w-full">
+          <div className="grid lg:grid-cols-2 gap-16 items-center py-20">
+            {/* Hero Content */}
+            <div className="animate-slide-left">
+              <p className="text-gold text-sm tracking-[0.3em] uppercase mb-6">
+                Distinguished Legal Practice
               </p>
               
-              <div className="flex flex-wrap gap-4">
+              <h1 className="font-display text-5xl lg:text-7xl font-light text-charcoal leading-[1.1] mb-8">
+                Legal counsel
+                <br />
+                of <span className="italic text-gold">distinction</span>
+              </h1>
+              
+              <p className="text-taupe text-lg leading-relaxed mb-12 max-w-lg font-light">
+                Providing sophisticated legal solutions with unwavering commitment 
+                to excellence, integrity, and client success.
+              </p>
+              
+              <div className="flex flex-wrap gap-6">
                 <Link
                   to="/contact"
-                  className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl text-white font-semibold hover:shadow-lg hover:shadow-primary-600/25 transform hover:-translate-y-0.5 transition-all"
+                  className="group inline-flex items-center gap-3 px-10 py-4 bg-gold text-white tracking-wider uppercase text-sm hover:bg-gold-dark transition-all duration-500"
                 >
-                  Get Free Consultation
-                  <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                  Schedule Consultation
+                  <FiArrowRight className="group-hover:translate-x-2 transition-transform duration-500" />
                 </Link>
                 <Link
                   to="/podcasts"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-dark-800/50 border border-primary-600/30 rounded-xl text-white font-semibold hover:bg-primary-600/10 hover:border-primary-500 transition-all"
+                  className="inline-flex items-center gap-3 px-10 py-4 border border-gold text-gold tracking-wider uppercase text-sm hover:bg-gold hover:text-white transition-all duration-500"
                 >
-                  <FiPlay /> Listen to Podcast
+                  <FiPlay className="text-sm" />
+                  Listen
                 </Link>
               </div>
             </div>
 
-            {/* Hero Card */}
-            <div className="animate-slide-in-right hidden lg:block">
+            {/* Hero Image/Visual */}
+            <div className="hidden lg:block animate-fade-in">
               <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-primary-600/20 to-primary-400/20 rounded-3xl blur-2xl animate-pulse-slow" />
-                <div className="relative bg-dark-800/50 backdrop-blur-xl border border-primary-600/30 rounded-2xl p-8 shadow-2xl">
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-primary-600/25">
-                      <FiShield className="text-3xl text-white" />
-                    </div>
-                    <h3 className="font-display text-2xl font-bold text-white mb-3">
-                      Book a Consultation
-                    </h3>
-                    <p className="text-dark-400 mb-6">
-                      Get expert legal advice tailored to your situation
-                    </p>
-                    <Link
-                      to="/contact"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl text-white font-semibold hover:shadow-lg transition-all"
-                    >
-                      Schedule Now <FiChevronRight />
-                    </Link>
-                  </div>
-                </div>
+                <div className="aspect-[4/5] bg-cream border border-border-light" />
+                <div className="absolute -bottom-8 -right-8 w-64 h-64 border border-gold/20" />
+                <div className="absolute -top-8 -left-8 w-48 h-48 border border-gold/20" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="relative bg-dark-900 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="group bg-dark-800/50 backdrop-blur-sm border border-primary-600/10 rounded-2xl p-8 text-center hover:border-primary-600/30 hover:bg-dark-800/80 transition-all duration-300 animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <stat.icon className="text-3xl text-primary-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                <div className="text-3xl font-bold text-white mb-2">{stat.number}</div>
-                <div className="text-dark-400">{stat.label}</div>
+      {/* Featured Content */}
+      {!loading && (
+        <>
+          {/* Podcasts Section */}
+          <section className="py-24 bg-cream">
+            <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+              <div className="text-center mb-16">
+                <p className="text-gold text-sm tracking-[0.3em] uppercase mb-4">Listen</p>
+                <h2 className="font-display text-4xl lg:text-5xl text-charcoal mb-4">
+                  Latest Podcasts
+                </h2>
+                <p className="text-taupe max-w-xl mx-auto">
+                  Thoughtful conversations on legal matters that matter.
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Podcasts Section */}
-      <section className="py-20 bg-dark-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 animate-fade-in-up">
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-4">
-              Latest Podcast Episodes
-            </h2>
-            <p className="text-dark-400 text-lg max-w-2xl mx-auto mb-8">
-              Expert legal insights and practical advice in every episode
-            </p>
-            <Link
-              to="/podcasts"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-dark-800/50 border border-primary-600/30 rounded-xl text-white hover:bg-primary-600/10 transition-all"
-            >
-              View All Episodes <FiArrowRight />
-            </Link>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {podcasts.map((podcast, index) => (
-              <div
-                key={podcast._id}
-                className="group bg-dark-800/30 backdrop-blur-sm border border-primary-600/10 rounded-2xl p-6 hover:border-primary-600/30 hover:shadow-xl hover:shadow-primary-600/5 transition-all duration-300 animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.15}s` }}
-              >
-                <div className="flex justify-between items-center mb-4">
-                  <span className="px-3 py-1 bg-gradient-to-r from-primary-600 to-primary-700 rounded-full text-xs font-semibold">
-                    EP {podcast.episodeNumber}
-                  </span>
-                  <span className="text-sm text-primary-400">{podcast.legalTopic}</span>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary-400 transition-colors">
-                  {podcast.title}
-                </h3>
-                <p className="text-dark-400 mb-6 line-clamp-2">{podcast.description}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-primary-400">{podcast.duration}</span>
-                  <Link
-                    to={`/podcasts/${podcast._id}`}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600/20 text-primary-400 rounded-lg hover:bg-primary-600 hover:text-white transition-all text-sm font-medium"
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {podcasts.map((podcast, index) => (
+                  <div
+                    key={podcast._id}
+                    className="group bg-white p-8 hover:shadow-elegant transition-all duration-500 animate-fade-up"
+                    style={{ animationDelay: `${index * 0.15}s` }}
                   >
-                    <FiPlay className="text-sm" /> Listen Now
-                  </Link>
-                </div>
+                    <div className="mb-6">
+                      <span className="text-gold text-xs tracking-[0.2em] uppercase">
+                        Episode {podcast.episodeNumber}
+                      </span>
+                    </div>
+                    <h3 className="font-display text-2xl text-charcoal mb-4 group-hover:text-gold transition-colors">
+                      {podcast.title}
+                    </h3>
+                    <p className="text-taupe text-sm leading-relaxed mb-6 line-clamp-2">
+                      {podcast.description}
+                    </p>
+                    <Link
+                      to={`/podcasts/${podcast._id}`}
+                      className="inline-flex items-center gap-2 text-gold text-sm tracking-wider uppercase group/link"
+                    >
+                      Listen Now
+                      <FiArrowRight className="group-hover/link:translate-x-2 transition-transform" />
+                    </Link>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
 
-      {/* Books Section */}
-      <section className="py-20 bg-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 animate-fade-in-up">
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-4">
-              Legal Books & Resources
-            </h2>
-            <p className="text-dark-400 text-lg max-w-2xl mx-auto mb-8">
-              Comprehensive guides to help you understand your rights
-            </p>
-            <Link
-              to="/books"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-dark-800/50 border border-primary-600/30 rounded-xl text-white hover:bg-primary-600/10 transition-all"
-            >
-              Browse All Books <FiBook />
-            </Link>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {books.map((book, index) => (
-              <div
-                key={book._id}
-                className="group bg-dark-800/30 backdrop-blur-sm border border-primary-600/10 rounded-2xl p-6 hover:border-primary-600/30 hover:shadow-xl transition-all duration-300 animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.15}s` }}
-              >
-                <div className="w-14 h-14 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <FiBook className="text-2xl text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">{book.title}</h3>
-                {book.subtitle && (
-                  <p className="text-sm text-primary-400 mb-2">{book.subtitle}</p>
-                )}
-                <p className="text-dark-400 mb-6 line-clamp-2">{book.description}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-primary-400">${book.price}</span>
-                  <button className="px-4 py-2 bg-primary-600/20 text-primary-400 rounded-lg hover:bg-primary-600 hover:text-white transition-all text-sm font-medium">
-                    View Details
-                  </button>
-                </div>
+          {/* Books Section */}
+          <section className="py-24 bg-warm-white">
+            <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+              <div className="text-center mb-16">
+                <p className="text-gold text-sm tracking-[0.3em] uppercase mb-4">Read</p>
+                <h2 className="font-display text-4xl lg:text-5xl text-charcoal mb-4">
+                  Books & Resources
+                </h2>
+                <p className="text-taupe max-w-xl mx-auto">
+                  Comprehensive guides crafted with expertise and care.
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {books.map((book, index) => (
+                  <div
+                    key={book._id}
+                    className="group bg-white p-8 border border-border-light hover:border-gold/30 hover:shadow-elegant transition-all duration-500 animate-fade-up"
+                    style={{ animationDelay: `${index * 0.15}s` }}
+                  >
+                    <h3 className="font-display text-2xl text-charcoal mb-3 group-hover:text-gold transition-colors">
+                      {book.title}
+                    </h3>
+                    {book.subtitle && (
+                      <p className="text-gold text-sm mb-4 italic">{book.subtitle}</p>
+                    )}
+                    <p className="text-taupe text-sm leading-relaxed mb-6 line-clamp-2">
+                      {book.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="font-display text-2xl text-gold">${book.price}</span>
+                      <Link
+                        to="/books"
+                        className="text-taupe hover:text-gold text-sm tracking-wider uppercase transition-colors"
+                      >
+                        View Details
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </>
+      )}
 
       {/* CTA Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-primary-800" />
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIj48L2NpcmNsZT48L2c+PC9nPjwvc3ZnPg==')] opacity-10" />
-        
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-scale-in">
-          <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-6">
-            Ready to Get Started?
+      <section className="py-32 bg-charcoal">
+        <div className="max-w-[1400px] mx-auto px-8 lg:px-16 text-center">
+          <p className="text-gold text-sm tracking-[0.3em] uppercase mb-6">Begin Your Journey</p>
+          <h2 className="font-display text-4xl lg:text-6xl text-white font-light mb-8">
+            Ready to discuss
+            <br />
+            your legal needs?
           </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Schedule your free consultation today and take the first step towards resolving your legal matters.
+          <p className="text-taupe text-lg mb-12 max-w-xl mx-auto font-light">
+            Schedule a confidential consultation with our experienced team.
           </p>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-700 rounded-xl font-semibold text-lg hover:shadow-2xl hover:shadow-white/20 transform hover:-translate-y-0.5 transition-all"
+            className="inline-flex items-center gap-3 px-12 py-5 bg-gold text-white tracking-wider uppercase text-sm hover:bg-gold-light transition-all duration-500"
           >
-            Free Consultation <FiArrowRight />
+            Enquire Now
+            <FiArrowRight />
           </Link>
         </div>
       </section>

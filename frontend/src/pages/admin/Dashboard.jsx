@@ -1,7 +1,7 @@
+// pages/admin/Dashboard.jsx
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { FiUsers, FiPhone, FiBook, FiHeadphones, FiTrendingUp, FiTrendingDown } from 'react-icons/fi'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts'
+import { FiArrowRight } from 'react-icons/fi'
 import { dashboardAPI } from '../../services/api'
 import LoadingSpinner from '../../components/LoadingSpinner'
 
@@ -26,175 +26,67 @@ const Dashboard = () => {
   if (loading) return <LoadingSpinner />
 
   const statCards = [
-    { 
-      icon: FiPhone, 
-      label: 'Total Contacts', 
-      value: stats?.totalContacts || 0, 
-      change: '+12%',
-      color: 'from-blue-600 to-blue-700' 
-    },
-    { 
-      icon: FiHeadphones, 
-      label: 'Podcasts', 
-      value: stats?.totalPodcasts || 0, 
-      change: '+5%',
-      color: 'from-purple-600 to-purple-700' 
-    },
-    { 
-      icon: FiBook, 
-      label: 'Books', 
-      value: stats?.totalBooks || 0, 
-      change: '+8%',
-      color: 'from-green-600 to-green-700' 
-    },
-    { 
-      icon: FiUsers, 
-      label: 'Users', 
-      value: stats?.totalUsers || 0, 
-      change: '+15%',
-      color: 'from-orange-600 to-orange-700' 
-    },
+    { label: 'Enquiries', value: stats?.totalContacts || 0, href: '/admin/contacts' },
+    { label: 'Podcasts', value: stats?.totalPodcasts || 0, href: '/admin/podcasts' },
+    { label: 'Books', value: stats?.totalBooks || 0, href: '/admin/books' },
+    { label: 'Users', value: stats?.totalUsers || 0, href: '/admin/users' },
   ]
 
-  const statusData = stats?.contactsByStatus 
-    ? Object.entries(stats.contactsByStatus).map(([key, value]) => ({
-        name: key.charAt(0).toUpperCase() + key.slice(1),
-        value
-      }))
-    : []
-
-  const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b']
-
-  const trendData = stats?.contactTrends || []
-
   return (
-    <div className="bg-dark-950 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="bg-warm-white min-h-screen">
+      <div className="max-w-[1400px] mx-auto px-8 lg:px-16 py-16">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="font-display text-3xl font-bold text-white mb-2">Admin Dashboard</h1>
-          <p className="text-dark-400">Overview of your legal practice</p>
+        <div className="mb-16">
+          <p className="text-gold text-sm tracking-[0.3em] uppercase mb-4">Admin</p>
+          <h1 className="font-display text-4xl lg:text-5xl text-charcoal">
+            Dashboard
+          </h1>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {statCards.map((stat, index) => (
-            <div
+            <Link
               key={index}
-              className="bg-dark-800/30 backdrop-blur-sm border border-primary-600/10 rounded-2xl p-6 hover:border-primary-600/30 transition-all animate-fade-in-up"
+              to={stat.href}
+              className="group bg-white p-8 border border-border-light hover:border-gold/30 hover:shadow-elegant transition-all duration-500 animate-fade-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="flex items-center justify-between mb-4">
-                <div className={`w-12 h-12 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center`}>
-                  <stat.icon className="text-xl text-white" />
-                </div>
-                <span className="flex items-center gap-1 text-sm text-green-400">
-                  <FiTrendingUp className="text-sm" />
-                  {stat.change}
-                </span>
-              </div>
-              <h3 className="text-3xl font-bold text-white mb-1">{stat.value}</h3>
-              <p className="text-dark-400 text-sm">{stat.label}</p>
-            </div>
+              <p className="text-taupe text-sm tracking-wider uppercase mb-4">{stat.label}</p>
+              <p className="font-display text-5xl text-charcoal group-hover:text-gold transition-colors mb-4">
+                {stat.value}
+              </p>
+              <span className="inline-flex items-center gap-2 text-gold text-sm tracking-wider uppercase">
+                Manage
+                <FiArrowRight className="group-hover:translate-x-2 transition-transform" />
+              </span>
+            </Link>
           ))}
         </div>
 
-        {/* Charts Grid */}
-        <div className="grid lg:grid-cols-2 gap-6">
-          {/* Contact Trends Chart */}
-          <div className="bg-dark-800/30 backdrop-blur-sm border border-primary-600/10 rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-6">Contact Trends (Last 7 Days)</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={trendData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="_id" stroke="#64748b" fontSize={12} />
-                <YAxis stroke="#64748b" fontSize={12} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#1e293b',
-                    border: '1px solid #334155',
-                    borderRadius: '8px',
-                    color: '#fff'
-                  }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="count"
-                  stroke="#3b82f6"
-                  strokeWidth={2}
-                  dot={{ fill: '#3b82f6', strokeWidth: 2 }}
-                  activeDot={{ r: 8 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Status Distribution Chart */}
-          <div className="bg-dark-800/30 backdrop-blur-sm border border-primary-600/10 rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-6">Contact Status Distribution</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={statusData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {statusData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#1e293b',
-                    border: '1px solid #334155',
-                    borderRadius: '8px',
-                    color: '#fff'
-                  }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="flex justify-center gap-6 mt-4">
-              {statusData.map((entry, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                  <span className="text-sm text-dark-400">{entry.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="grid md:grid-cols-3 gap-6 mt-8">
-          <Link
-            to="/admin/contacts"
-            className="bg-dark-800/30 border border-primary-600/10 rounded-2xl p-6 hover:border-primary-600/30 transition-all group"
-          >
-            <FiPhone className="text-3xl text-primary-400 mb-4" />
-            <h3 className="text-lg font-semibold text-white mb-2">Manage Contacts</h3>
-            <p className="text-dark-400 text-sm">View and respond to client inquiries</p>
-          </Link>
-          <Link
-            to="/admin/podcasts"
-            className="bg-dark-800/30 border border-primary-600/10 rounded-2xl p-6 hover:border-primary-600/30 transition-all group"
-          >
-            <FiHeadphones className="text-3xl text-primary-400 mb-4" />
-            <h3 className="text-lg font-semibold text-white mb-2">Manage Podcasts</h3>
-            <p className="text-dark-400 text-sm">Add and edit podcast episodes</p>
-          </Link>
-          <Link
-            to="/admin/books"
-            className="bg-dark-800/30 border border-primary-600/10 rounded-2xl p-6 hover:border-primary-600/30 transition-all group"
-          >
-            <FiBook className="text-3xl text-primary-400 mb-4" />
-            <h3 className="text-lg font-semibold text-white mb-2">Manage Books</h3>
-            <p className="text-dark-400 text-sm">Update your book collection</p>
-          </Link>
+        {/* Quick Links */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { label: 'Contact Enquiries', href: '/admin/contacts', desc: 'View and manage client messages' },
+            { label: 'Podcast Episodes', href: '/admin/podcasts', desc: 'Add and edit podcast content' },
+            { label: 'Book Collection', href: '/admin/books', desc: 'Manage your published works' },
+          ].map((link, index) => (
+            <Link
+              key={index}
+              to={link.href}
+              className="group border border-border-light p-8 hover:border-gold/30 transition-all duration-500 animate-fade-up"
+              style={{ animationDelay: `${index * 0.15}s` }}
+            >
+              <h3 className="font-display text-xl text-charcoal mb-2 group-hover:text-gold transition-colors">
+                {link.label}
+              </h3>
+              <p className="text-taupe text-sm mb-4">{link.desc}</p>
+              <span className="text-gold text-sm tracking-wider uppercase inline-flex items-center gap-2">
+                View
+                <FiArrowRight className="group-hover:translate-x-2 transition-transform" />
+              </span>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

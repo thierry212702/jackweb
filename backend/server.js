@@ -39,6 +39,15 @@ app.use('/api/resources', resourceRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
+// Root route
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Lawyer API is running',
+    docs: '/api/health'
+  });
+});
+
 // Health check route
 app.get('/api/health', (req, res) => {
   res.json({ 

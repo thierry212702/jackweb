@@ -1,7 +1,7 @@
+// pages/Contact.jsx
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { FiSend, FiMapPin, FiPhone, FiMail, FiClock } from 'react-icons/fi'
 import { contactAPI } from '../services/api'
 
 const Contact = () => {
@@ -12,162 +12,148 @@ const Contact = () => {
     setLoading(true)
     try {
       await contactAPI.submit(data)
-      toast.success('Your message has been sent successfully!')
+      toast.success('Thank you for your enquiry. We will be in touch shortly.')
       reset()
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to send message')
+      toast.error('Please try again or contact us directly.')
     } finally {
       setLoading(false)
     }
   }
 
-  const contactInfo = [
-    { icon: FiMapPin, title: 'Address', info: '123 Legal Street, New York, NY 10001' },
-    { icon: FiPhone, title: 'Phone', info: '(555) 123-4567' },
-    { icon: FiMail, title: 'Email', info: 'info@sarahmichelle.com' },
-    { icon: FiClock, title: 'Hours', info: 'Mon-Fri: 9:00 AM - 6:00 PM' },
-  ]
-
-  const inputClass = "w-full px-4 py-3 bg-dark-800/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
-  const errorClass = "text-red-400 text-sm mt-1"
+  const inputClass = "w-full px-0 py-4 bg-transparent border-b border-border-light text-charcoal placeholder-taupe focus:border-gold outline-none transition-all duration-500 font-light"
 
   return (
     <div>
-      {/* Page Header */}
-      <section className="bg-gradient-to-b from-dark-900 to-dark-950 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-display text-5xl font-bold text-white mb-4 animate-fade-in-up">
-            Get In Touch
+      {/* Header */}
+      <section className="bg-cream py-32">
+        <div className="max-w-[1400px] mx-auto px-8 lg:px-16 text-center">
+          <p className="text-gold text-sm tracking-[0.3em] uppercase mb-6">Contact</p>
+          <h1 className="font-display text-5xl lg:text-7xl text-charcoal font-light mb-6">
+            Enquire
           </h1>
-          <p className="text-dark-400 text-lg animate-fade-in-up">
-            Schedule your free consultation today
+          <p className="text-taupe text-lg max-w-xl mx-auto font-light">
+            We look forward to hearing from you and discussing how we may be of service.
           </p>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-20 bg-dark-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Info */}
-            <div className="animate-slide-in-left">
-              <h2 className="font-display text-3xl font-bold text-white mb-6">
-                Contact Information
+      {/* Contact Form */}
+      <section className="py-24 bg-warm-white">
+        <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+          <div className="grid lg:grid-cols-2 gap-20">
+            {/* Contact Information */}
+            <div className="animate-slide-left">
+              <h2 className="font-display text-3xl text-charcoal mb-8">
+                Our Offices
               </h2>
-              <p className="text-dark-400 mb-8 leading-relaxed">
-                Reach out to us for expert legal guidance. We're here to help you navigate your legal challenges.
-              </p>
               
-              <div className="space-y-6">
-                {contactInfo.map((item, index) => (
-                  <div key={index} className="flex items-start gap-4 p-4 bg-dark-800/30 rounded-xl border border-primary-600/10 hover:border-primary-600/30 transition-all">
-                    <div className="w-12 h-12 bg-primary-600/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <item.icon className="text-xl text-primary-400" />
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold mb-1">{item.title}</h4>
-                      <p className="text-dark-400">{item.info}</p>
-                    </div>
-                  </div>
-                ))}
+              <div className="space-y-12">
+                <div>
+                  <p className="text-gold text-sm tracking-[0.2em] uppercase mb-4">New York</p>
+                  <p className="text-taupe leading-relaxed">
+                    123 Legal Street<br />
+                    New York, NY 10001
+                  </p>
+                </div>
+                
+                <div>
+                  <p className="text-gold text-sm tracking-[0.2em] uppercase mb-4">Contact</p>
+                  <p className="text-taupe mb-2">
+                    <a href="tel:+15551234567" className="hover:text-gold transition-colors">
+                      +1 (555) 123-4567
+                    </a>
+                  </p>
+                  <p className="text-taupe">
+                    <a href="mailto:info@sarahmichelle.com" className="hover:text-gold transition-colors">
+                      info@sarahmichelle.com
+                    </a>
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-gold text-sm tracking-[0.2em] uppercase mb-4">Hours</p>
+                  <p className="text-taupe leading-relaxed">
+                    Monday – Friday<br />
+                    9:00 AM – 6:00 PM
+                  </p>
+                </div>
               </div>
             </div>
 
-            {/* Contact Form */}
-            <div className="animate-slide-in-right">
-              <div className="bg-dark-800/30 backdrop-blur-sm border border-primary-600/10 rounded-2xl p-8">
-                <h2 className="font-display text-2xl font-bold text-white mb-6">
-                  Send Us a Message
-                </h2>
-                
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-                  <div>
-                    <label className="block text-sm font-medium text-dark-300 mb-2">Full Name *</label>
-                    <input
-                      type="text"
-                      {...register('name', { required: 'Name is required' })}
-                      className={inputClass}
-                      placeholder="John Doe"
-                    />
-                    {errors.name && <p className={errorClass}>{errors.name.message}</p>}
-                  </div>
+            {/* Form */}
+            <div className="animate-fade-up">
+              <h2 className="font-display text-3xl text-charcoal mb-12">
+                Send a Message
+              </h2>
+              
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
+                <div>
+                  <input
+                    type="text"
+                    {...register('name', { required: true })}
+                    className={inputClass}
+                    placeholder="Full Name"
+                  />
+                  {errors.name && <p className="text-rose text-xs mt-2">Please enter your name</p>}
+                </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-dark-300 mb-2">Email Address *</label>
-                    <input
-                      type="email"
-                      {...register('email', {
-                        required: 'Email is required',
-                        pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' }
-                      })}
-                      className={inputClass}
-                      placeholder="john@example.com"
-                    />
-                    {errors.email && <p className={errorClass}>{errors.email.message}</p>}
-                  </div>
+                <div>
+                  <input
+                    type="email"
+                    {...register('email', { 
+                      required: true,
+                      pattern: /^\S+@\S+$/i 
+                    })}
+                    className={inputClass}
+                    placeholder="Email Address"
+                  />
+                  {errors.email && <p className="text-rose text-xs mt-2">Please enter a valid email</p>}
+                </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-dark-300 mb-2">Phone Number</label>
-                    <input
-                      type="tel"
-                      {...register('phone')}
-                      className={inputClass}
-                      placeholder="(555) 123-4567"
-                    />
-                  </div>
+                <div>
+                  <input
+                    type="tel"
+                    {...register('phone')}
+                    className={inputClass}
+                    placeholder="Phone Number"
+                  />
+                </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-dark-300 mb-2">Case Type</label>
-                    <select {...register('caseType')} className={inputClass}>
-                      <option value="">Select case type</option>
-                      <option value="civil">Civil Litigation</option>
-                      <option value="criminal">Criminal Defense</option>
-                      <option value="family">Family Law</option>
-                      <option value="corporate">Corporate Law</option>
-                      <option value="employment">Employment Law</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
+                <div>
+                  <select {...register('caseType')} className={inputClass}>
+                    <option value="">Area of Interest</option>
+                    <option value="civil">Civil Litigation</option>
+                    <option value="criminal">Criminal Defense</option>
+                    <option value="family">Family Law</option>
+                    <option value="corporate">Corporate Law</option>
+                    <option value="employment">Employment Law</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-dark-300 mb-2">Urgency Level</label>
-                    <select {...register('urgency')} defaultValue="medium" className={inputClass}>
-                      <option value="low">Low</option>
-                      <option value="medium">Medium</option>
-                      <option value="high">High</option>
-                      <option value="urgent">Urgent</option>
-                    </select>
-                  </div>
+                <div>
+                  <textarea
+                    {...register('message', { required: true, minLength: 10 })}
+                    className={`${inputClass} resize-none`}
+                    rows="1"
+                    placeholder="Your Message"
+                    onInput={(e) => {
+                      e.target.style.height = 'auto'
+                      e.target.style.height = e.target.scrollHeight + 'px'
+                    }}
+                  />
+                  {errors.message && <p className="text-rose text-xs mt-2">Please tell us about your enquiry</p>}
+                </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-dark-300 mb-2">Message *</label>
-                    <textarea
-                      {...register('message', {
-                        required: 'Message is required',
-                        minLength: { value: 10, message: 'Message must be at least 10 characters' }
-                      })}
-                      className={`${inputClass} resize-none`}
-                      rows="5"
-                      placeholder="Describe your legal issue..."
-                    />
-                    {errors.message && <p className={errorClass}>{errors.message.message}</p>}
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 rounded-xl text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                  >
-                    {loading ? (
-                      'Sending...'
-                    ) : (
-                      <>
-                        <FiSend /> Send Message
-                      </>
-                    )}
-                  </button>
-                </form>
-              </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-5 bg-gold text-white tracking-[0.2em] uppercase text-sm hover:bg-gold-dark disabled:opacity-50 transition-all duration-500"
+                >
+                  {loading ? 'Sending...' : 'Send Enquiry'}
+                </button>
+              </form>
             </div>
           </div>
         </div>
