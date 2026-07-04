@@ -2,13 +2,11 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { FiMenu, FiX, FiChevronDown, FiUser, FiPhone, FiArrowRight } from 'react-icons/fi'
+import { FiMenu, FiX, FiPhone } from 'react-icons/fi'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [whatWeDoOpen, setWhatWeDoOpen] = useState(false)
-  const dropdownRef = useRef(null)
   const { user, logout, isAdmin } = useAuth()
   const location = useLocation()
 
@@ -18,132 +16,71 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setWhatWeDoOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
-
   const navLinks = [
-    { path: '/', label: 'Home' },
-    { 
-      label: 'What We Do',
-      isDropdown: true,
-      items: [
-        { path: '/businesses', label: 'For Businesses', description: 'Legal solutions for companies' },
-        { path: '/individuals', label: 'For Individuals', description: 'Personal legal services' },
-      ]
-    },
-    { path: '/podcasts', label: 'Podcasts' },
-    { path: '/books', label: 'Books' },
-    { path: '/resources', label: 'Resources' },
-    { path: '/contact', label: 'Contact' },
+    { path: '/businesses', label: 'For business' },
+    { path: '/individuals', label: 'For individuals' },
+    { path: '/about', label: 'About us' },
+    { path: '/what-we-do', label: 'What we do' },
+    { path: '/news', label: 'News' },
+    { path: '/contact', label: 'Contact us' },
   ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled 
-        ? 'bg-white/98 backdrop-blur-md shadow-elegant py-3' 
-        : 'bg-white py-5'
+        ? 'bg-white shadow-sm py-3' 
+        : 'bg-white/90 py-4'
     }`}>
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-chocolate rounded-lg flex items-center justify-center">
-              <span className="text-white font-display text-xl font-bold">SM</span>
-            </div>
-            <div>
-              <h1 className="font-display text-xl lg:text-2xl font-semibold text-chocolate group-hover:text-chocolate-dark transition-colors">
-                Sarah Michelle
-              </h1>
-              <span className="text-xs text-taupe tracking-[0.25em] uppercase block leading-none">
-                Legal Services
-              </span>
-            </div>
+          <Link to="/" className="flex items-center gap-2">
+            <h1 className="text-xl lg:text-2xl text-[#1a1a1a] font-medium" 
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Sarah Michelle
+            </h1>
+            <span className="hidden sm:block text-xs text-gray-400 tracking-[0.2em] uppercase">
+              Legal Services
+            </span>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link, index) => (
-              <div key={index} className="relative" ref={link.isDropdown ? dropdownRef : null}>
-                {link.isDropdown ? (
-                  <>
-                    <button
-                      onClick={() => setWhatWeDoOpen(!whatWeDoOpen)}
-                      className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-colors duration-300 ${
-                        whatWeDoOpen || location.pathname === '/businesses' || location.pathname === '/individuals'
-                          ? 'text-chocolate'
-                          : 'text-taupe hover:text-chocolate'
-                      }`}
-                    >
-                      {link.label}
-                      <FiChevronDown className={`text-xs transition-transform duration-300 ${whatWeDoOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                    
-                    {whatWeDoOpen && (
-                      <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-border-light rounded-lg shadow-xl py-2 animate-fade-in">
-                        {link.items.map((item, i) => (
-                          <Link
-                            key={i}
-                            to={item.path}
-                            onClick={() => setWhatWeDoOpen(false)}
-                            className="block px-5 py-3 hover:bg-cream transition-colors group/item"
-                          >
-                            <p className="text-sm font-medium text-chocolate group-hover/item:text-chocolate-dark">
-                              {item.label}
-                            </p>
-                            <p className="text-xs text-taupe mt-0.5">
-                              {item.description}
-                            </p>
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <Link
-                    to={link.path}
-                    className={`px-4 py-2 text-sm font-medium transition-colors duration-300 ${
-                      location.pathname === link.path
-                        ? 'text-chocolate'
-                        : 'text-taupe hover:text-chocolate'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                )}
-              </div>
+          <div className="hidden lg:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`text-sm transition-colors duration-300 ${
+                  location.pathname === link.path
+                    ? 'text-[#8B7355]'
+                    : 'text-gray-700 hover:text-[#8B7355]'
+                }`}
+              >
+                {link.label}
+              </Link>
             ))}
           </div>
 
-          {/* Right Side Actions */}
-          <div className="hidden lg:flex items-center gap-4">
+          {/* Right Side */}
+          <div className="hidden lg:flex items-center gap-6">
             <a
-              href="tel:+15551234567"
-              className="flex items-center gap-2 px-4 py-2 text-sm text-chocolate hover:text-chocolate-dark transition-colors"
+              href="tel:+442890243126"
+              className="text-sm text-gray-700 hover:text-[#8B7355] transition-colors flex items-center gap-2"
             >
               <FiPhone className="text-sm" />
-              <span>(555) 123-4567</span>
+              +44 (0)28 9024 3126
             </a>
             
             {user ? (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 {isAdmin && (
-                  <Link
-                    to="/admin"
-                    className="px-4 py-2 text-sm text-taupe hover:text-chocolate transition-colors font-medium"
-                  >
+                  <Link to="/admin" className="text-sm text-gray-700 hover:text-[#8B7355] transition-colors">
                     Admin
                   </Link>
                 )}
                 <button
                   onClick={logout}
-                  className="px-4 py-2 text-sm text-taupe hover:text-red-600 transition-colors font-medium"
+                  className="text-sm text-gray-500 hover:text-red-600 transition-colors"
                 >
                   Sign Out
                 </button>
@@ -151,9 +88,8 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-chocolate text-white text-sm font-medium rounded-lg hover:bg-chocolate-dark transition-all"
+                className="text-sm text-gray-700 hover:text-[#8B7355] transition-colors"
               >
-                <FiUser className="text-sm" />
                 Client Portal
               </Link>
             )}
@@ -162,7 +98,7 @@ const Navbar = () => {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden text-2xl text-chocolate hover:text-chocolate-dark transition-colors"
+            className="lg:hidden text-2xl text-gray-700"
           >
             {isOpen ? <FiX /> : <FiMenu />}
           </button>
@@ -170,66 +106,31 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="lg:hidden mt-6 pt-6 border-t border-border-light animate-fade-in">
-            <div className="flex flex-col gap-2">
-              {navLinks.map((link, index) => (
-                <div key={index}>
-                  {link.isDropdown ? (
-                    <>
-                      <p className="px-4 py-3 text-sm font-medium text-chocolate">
-                        {link.label}
-                      </p>
-                      {link.items.map((item, i) => (
-                        <Link
-                          key={i}
-                          to={item.path}
-                          onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2.5 text-sm text-taupe hover:text-chocolate hover:bg-cream transition-colors"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </>
-                  ) : (
-                    <Link
-                      to={link.path}
-                      onClick={() => setIsOpen(false)}
-                      className={`block px-4 py-3 text-sm font-medium transition-colors ${
-                        location.pathname === link.path
-                          ? 'text-chocolate bg-cream rounded-lg'
-                          : 'text-taupe hover:text-chocolate'
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  )}
-                </div>
+          <div className="lg:hidden mt-6 pt-6 border-t border-gray-200">
+            <div className="flex flex-col gap-3">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className="text-sm text-gray-700 py-2 hover:text-[#8B7355] transition-colors"
+                >
+                  {link.label}
+                </Link>
               ))}
-              
-              <div className="mt-4 pt-4 border-t border-border-light">
+              <div className="pt-4 border-t border-gray-200">
                 {user ? (
-                  <>
-                    {isAdmin && (
-                      <Link
-                        to="/admin"
-                        onClick={() => setIsOpen(false)}
-                        className="block px-4 py-3 text-sm text-taupe hover:text-chocolate transition-colors"
-                      >
-                        Admin Dashboard
-                      </Link>
-                    )}
-                    <button
-                      onClick={() => { logout(); setIsOpen(false); }}
-                      className="w-full mt-2 py-3 bg-chocolate text-white text-sm font-medium rounded-lg hover:bg-chocolate-dark transition-all"
-                    >
-                      Sign Out
-                    </button>
-                  </>
+                  <button
+                    onClick={() => { logout(); setIsOpen(false); }}
+                    className="w-full py-3 bg-gray-900 text-white text-sm uppercase tracking-wider"
+                  >
+                    Sign Out
+                  </button>
                 ) : (
                   <Link
                     to="/login"
                     onClick={() => setIsOpen(false)}
-                    className="block w-full text-center py-3 bg-chocolate text-white text-sm font-medium rounded-lg hover:bg-chocolate-dark transition-all"
+                    className="block w-full text-center py-3 bg-gray-900 text-white text-sm uppercase tracking-wider"
                   >
                     Client Portal
                   </Link>
