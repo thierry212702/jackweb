@@ -1,3 +1,4 @@
+// context/AuthContext.jsx
 import { createContext, useState, useContext, useEffect } from 'react'
 import API from '../services/api'
 import toast from 'react-hot-toast'
@@ -17,9 +18,9 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      API.defaults.headers.common['Authorization'] = `Bearer ${token}`
     } else {
-      delete axios.defaults.headers.common['Authorization']
+      delete API.defaults.headers.common['Authorization']
     }
   }, [token])
 
@@ -27,9 +28,11 @@ export const AuthProvider = ({ children }) => {
     const loadUser = async () => {
       if (token) {
         try {
-          const { data } = await axios.get('/api/auth/profile')
-          setUser(data.user)
+          // Use API instance instead of axios directly
+          const { data } = await API.get('/auth/profile')
+          setUser(data.user || data.data?.user || data)
         } catch (error) {
+          console.log('Session expired')
           localStorage.removeItem('token')
           setToken(null)
           setUser(null)
@@ -41,19 +44,21 @@ export const AuthProvider = ({ children }) => {
   }, [token])
 
   const login = async (email, password) => {
-    const { data } = await axios.post('/api/auth/login', { email, password })
+    // Use API instance - it will use the baseURL from api.js
+    const { data } = await API.post('/auth/login', { email, password })
     localStorage.setItem('token', data.token)
     setToken(data.token)
-    setUser(data.user)
+    setUser(data.user || data.data?.user || data)
     toast.success('Login successful!')
     return data
   }
 
   const register = async (userData) => {
-    const { data } = await axios.post('/api/auth/register', userData)
+    // Use API instance - it will use the baseURL from api.js
+    const { data } = await API.post('/auth/register', userData)
     localStorage.setItem('token', data.token)
     setToken(data.token)
-    setUser(data.user)
+    setUser(data.user || data.data?.user || data)
     toast.success('Registration successful!')
     return data
   }
@@ -62,7 +67,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token')
     setToken(null)
     setUser(null)
-    delete axios.defaults.headers.common['Authorization']
+    delete API.defaults.headers.common['Authorization']
     toast.success('Logged out successfully')
   }
 
