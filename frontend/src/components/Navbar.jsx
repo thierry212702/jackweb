@@ -68,7 +68,7 @@ const Navbar = () => {
               className="text-sm text-gray-700 hover:text-[#8B7355] transition-colors flex items-center gap-2"
             >
               <FiPhone className="text-sm" />
-              +44 (0)28 9024 3126
+              +25 (0)798 822 311
             </a>
             
             {user ? (
