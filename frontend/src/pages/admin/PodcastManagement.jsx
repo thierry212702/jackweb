@@ -1,7 +1,10 @@
+// pages/admin/PodcastManagement.jsx
 import { useState, useEffect } from 'react'
-import { FiPlus, FiEdit2, FiTrash2, FiX, FiHeadphones } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
+import { FiPlus, FiEdit2, FiTrash2, FiX, FiHeadphones, FiArrowLeft, FiClock, FiTag } from 'react-icons/fi'
 import { podcastAPI } from '../../services/api'
 import LoadingSpinner from '../../components/LoadingSpinner'
+import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 
 const PodcastManagement = () => {
@@ -17,21 +20,27 @@ const PodcastManagement = () => {
     episodeNumber: '',
     keyTakeaways: ''
   })
+  const { isAdmin } = useAuth()
+
+  useEffect(() => {
+    if (!isAdmin) {
+      window.location.href = '/'
+      return
+    }
+    fetchPodcasts()
+  }, [isAdmin])
 
   const fetchPodcasts = async () => {
     try {
       const { data } = await podcastAPI.getAll()
-      setPodcasts(data.data)
+      setPodcasts(data.data || data.podcasts || data || [])
     } catch (error) {
       toast.error('Failed to load podcasts')
+      console.error('Error:', error)
     } finally {
       setLoading(false)
     }
   }
-
-  useEffect(() => {
-    fetchPodcasts()
-  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -54,7 +63,8 @@ const PodcastManagement = () => {
       resetForm()
       fetchPodcasts()
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Operation failed')
+      const message = error.response?.data?.message || 'Operation failed'
+      toast.error(message)
     }
   }
 
@@ -72,11 +82,11 @@ const PodcastManagement = () => {
   const handleEdit = (podcast) => {
     setEditingPodcast(podcast)
     setFormData({
-      title: podcast.title,
-      description: podcast.description,
-      legalTopic: podcast.legalTopic,
-      duration: podcast.duration,
-      episodeNumber: podcast.episodeNumber?.toString(),
+      title: podcast.title || '',
+      description: podcast.description || '',
+      legalTopic: podcast.legalTopic || '',
+      duration: podcast.duration || '',
+      episodeNumber: podcast.episodeNumber?.toString() || '',
       keyTakeaways: podcast.keyTakeaways?.join(', ') || ''
     })
     setShowModal(true)
@@ -94,102 +104,163 @@ const PodcastManagement = () => {
     })
   }
 
-  const inputClass = "w-full px-4 py-3 bg-dark-900/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:border-primary-500 outline-none transition-all"
+  const inputClass = "w-full px-4 py-3 bg-white border border-gray-200 text-[#1a1a1a] placeholder-gray-400 focus:border-[#C4956A] outline-none transition-colors text-sm"
 
   if (loading) return <LoadingSpinner />
 
   return (
-    <div className="bg-dark-950 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="bg-white min-h-screen">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16">
+        
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-          <div>
-            <h1 className="font-display text-3xl font-bold text-white mb-2">Podcast Management</h1>
-            <p className="text-dark-400">Add and manage podcast episodes</p>
+        <div className="mb-12">
+          <Link to="/admin" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#C4956A] transition-colors mb-6 text-sm">
+            <FiArrowLeft /> Back to Dashboard
+          </Link>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-[1px] bg-[#C4956A]" />
+            <span className="text-[#C4956A] text-xs tracking-[0.3em] uppercase font-medium">
+              Admin Panel
+            </span>
           </div>
-          <button
-            onClick={() => {
-              resetForm()
-              setShowModal(true)
-            }}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl text-white font-semibold hover:shadow-lg transition-all"
-          >
-            <FiPlus /> Add New Episode
-          </button>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+              <h1 className="text-4xl lg:text-5xl text-[#1a1a1a] mb-2" 
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                Podcast Management
+              </h1>
+              <p className="text-gray-500 font-light">
+                {podcasts.length} episodes total
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                resetForm()
+                setShowModal(true)
+              }}
+              className="inline-flex items-center gap-2 bg-[#1a1a1a] text-white px-8 py-3 text-sm tracking-wider uppercase hover:bg-[#333] transition-all"
+            >
+              <FiPlus /> Add New Episode
+            </button>
+          </div>
         </div>
 
         {/* Podcasts Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {podcasts.length === 0 ? (
-            <div className="col-span-full text-center py-12">
-              <FiHeadphones className="text-6xl text-dark-600 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-white mb-2">No episodes yet</h3>
-              <p className="text-dark-400">Click the button above to add your first episode</p>
-            </div>
-          ) : (
-            podcasts.map((podcast, index) => (
+        {podcasts.length === 0 ? (
+          <div className="text-center py-16 bg-[#F8F6F3]">
+            <FiHeadphones className="text-4xl text-gray-300 mx-auto mb-4" />
+            <h3 className="text-xl text-[#1a1a1a] mb-2" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              No episodes yet
+            </h3>
+            <p className="text-gray-500 font-light">Click the button above to add your first episode</p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {podcasts.map((podcast, index) => (
               <div
                 key={podcast._id}
-                className="bg-dark-800/30 backdrop-blur-sm border border-primary-600/10 rounded-2xl p-6 hover:border-primary-600/30 transition-all animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="group border border-gray-200 hover:border-[#C4956A]/30 hover:bg-[#F8F6F3] transition-all duration-300 flex flex-col"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center">
-                    <span className="text-lg font-bold text-white">{podcast.episodeNumber}</span>
+                <div className="p-8 flex-grow">
+                  {/* Episode Number */}
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="w-14 h-14 bg-[#F8F6F3] flex items-center justify-center group-hover:bg-[#1a1a1a] transition-all">
+                      <span className="text-xl text-[#1a1a1a] group-hover:text-white transition-colors" 
+                        style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                        {podcast.episodeNumber || '—'}
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEdit(podcast)}
+                        className="p-2 border border-gray-200 text-gray-400 hover:text-[#C4956A] hover:border-[#C4956A] transition-all"
+                      >
+                        <FiEdit2 className="text-sm" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(podcast._id)}
+                        className="p-2 border border-gray-200 text-gray-400 hover:text-red-500 hover:border-red-300 transition-all"
+                      >
+                        <FiTrash2 className="text-sm" />
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleEdit(podcast)}
-                      className="p-2 bg-dark-700/50 rounded-lg text-dark-400 hover:text-primary-400 hover:bg-primary-600/20 transition-all"
-                    >
-                      <FiEdit2 />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(podcast._id)}
-                      className="p-2 bg-dark-700/50 rounded-lg text-dark-400 hover:text-red-400 hover:bg-red-600/20 transition-all"
-                    >
-                      <FiTrash2 />
-                    </button>
+                  
+                  {/* Title */}
+                  <h3 className="text-xl text-[#1a1a1a] mb-3 group-hover:text-[#C4956A] transition-colors" 
+                    style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    {podcast.title}
+                  </h3>
+                  
+                  {/* Description */}
+                  <p className="text-gray-500 text-sm font-light mb-6 line-clamp-2">
+                    {podcast.description}
+                  </p>
+                  
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2">
+                    {podcast.legalTopic && (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-[#8B7355] text-xs">
+                        <FiTag className="text-xs" /> {podcast.legalTopic}
+                      </span>
+                    )}
+                    {podcast.duration && (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 text-gray-500 text-xs">
+                        <FiClock className="text-xs" /> {podcast.duration}
+                      </span>
+                    )}
                   </div>
-                </div>
-                
-                <h3 className="text-lg font-bold text-white mb-2">{podcast.title}</h3>
-                <p className="text-dark-400 text-sm mb-3 line-clamp-2">{podcast.description}</p>
-                
-                <div className="flex flex-wrap gap-2 mb-3">
-                  <span className="px-3 py-1 bg-primary-600/10 text-primary-400 rounded-lg text-xs">
-                    {podcast.legalTopic}
-                  </span>
-                  <span className="px-3 py-1 bg-dark-700/50 text-dark-400 rounded-lg text-xs">
-                    {podcast.duration}
-                  </span>
+
+                  {/* Key Takeaways Preview */}
+                  {podcast.keyTakeaways && podcast.keyTakeaways.length > 0 && (
+                    <div className="mt-4 pt-4 border-t border-gray-200">
+                      <p className="text-xs text-gray-400 tracking-wider uppercase mb-2">Key Takeaways</p>
+                      <div className="space-y-1">
+                        {podcast.keyTakeaways.slice(0, 3).map((takeaway, i) => (
+                          <p key={i} className="text-xs text-gray-500 font-light flex items-start gap-2">
+                            <span className="text-[#C4956A] mt-0.5">•</span>
+                            {takeaway}
+                          </p>
+                        ))}
+                        {podcast.keyTakeaways.length > 3 && (
+                          <p className="text-xs text-gray-400 font-light">
+                            +{podcast.keyTakeaways.length - 3} more
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Add/Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-dark-800 border border-primary-600/20 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scale-in">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-white">
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-8 border-b border-gray-200">
+              <h3 className="text-2xl text-[#1a1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                 {editingPodcast ? 'Edit Episode' : 'Add New Episode'}
               </h3>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-dark-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-[#1a1a1a] transition-colors"
               >
-                <FiX className="text-2xl" />
+                <FiX className="text-xl" />
               </button>
             </div>
             
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-5">
+            {/* Modal Form */}
+            <form onSubmit={handleSubmit} className="p-8 space-y-6">
+              <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-dark-300 mb-2">Title *</label>
+                  <label className="block text-xs tracking-wider uppercase text-gray-500 mb-2 font-medium">
+                    Title *
+                  </label>
                   <input
                     type="text"
                     required
@@ -200,20 +271,24 @@ const PodcastManagement = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-dark-300 mb-2">Legal Topic *</label>
+                  <label className="block text-xs tracking-wider uppercase text-gray-500 mb-2 font-medium">
+                    Legal Topic *
+                  </label>
                   <input
                     type="text"
                     required
                     value={formData.legalTopic}
                     onChange={(e) => setFormData({ ...formData, legalTopic: e.target.value })}
                     className={inputClass}
-                    placeholder="e.g., Civil Law"
+                    placeholder="e.g., Civil Law, Family Law"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-dark-300 mb-2">Description</label>
+                <label className="block text-xs tracking-wider uppercase text-gray-500 mb-2 font-medium">
+                  Description
+                </label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -223,9 +298,11 @@ const PodcastManagement = () => {
                 />
               </div>
 
-              <div className="grid sm:grid-cols-2 gap-5">
+              <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-dark-300 mb-2">Duration</label>
+                  <label className="block text-xs tracking-wider uppercase text-gray-500 mb-2 font-medium">
+                    Duration
+                  </label>
                   <input
                     type="text"
                     value={formData.duration}
@@ -235,7 +312,9 @@ const PodcastManagement = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-dark-300 mb-2">Episode Number</label>
+                  <label className="block text-xs tracking-wider uppercase text-gray-500 mb-2 font-medium">
+                    Episode Number
+                  </label>
                   <input
                     type="number"
                     value={formData.episodeNumber}
@@ -247,7 +326,7 @@ const PodcastManagement = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-dark-300 mb-2">
+                <label className="block text-xs tracking-wider uppercase text-gray-500 mb-2 font-medium">
                   Key Takeaways (comma-separated)
                 </label>
                 <input
@@ -259,12 +338,14 @@ const PodcastManagement = () => {
                 />
               </div>
 
-              <button
-                type="submit"
-                className="w-full px-6 py-4 bg-gradient-to-r from-primary-600 to-primary-700 rounded-xl text-white font-semibold hover:shadow-lg transition-all"
-              >
-                {editingPodcast ? 'Update Episode' : 'Create Episode'}
-              </button>
+              <div className="pt-4">
+                <button
+                  type="submit"
+                  className="w-full py-4 bg-[#1a1a1a] text-white text-sm tracking-wider uppercase hover:bg-[#333] transition-all"
+                >
+                  {editingPodcast ? 'Update Episode' : 'Create Episode'}
+                </button>
+              </div>
             </form>
           </div>
         </div>
