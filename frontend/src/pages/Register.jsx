@@ -2,38 +2,56 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { FiUser, FiMail, FiLock, FiArrowRight } from 'react-icons/fi'
+import { FiUser, FiMail, FiLock, FiArrowRight, FiAlertCircle } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 
 const Register = () => {
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: ''
   })
-  const { register: registerUser } = useAuth()
+  const { register } = useAuth()
   const navigate = useNavigate()
 
   const handleChange = (e) => {
+    setError('')
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
+    // Validation
+    if (!formData.name || !formData.email || !formData.password) {
+      setError('Please fill in all fields')
+      return
+    }
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters')
+      return
+    }
+    
     setLoading(true)
+    setError('')
     
     try {
-      await registerUser(formData)
-      toast.success('Account created successfully!')
+      // Attempt real registration through AuthContext
+      await register(formData)
       navigate('/')
-    } catch (error) {
-      console.log('Demo registration')
-      if (formData.name && formData.email && formData.password) {
-        toast.success('Account created! (Demo Mode)')
+    } catch (err) {
+      console.error('Registration error:', err)
+      
+      // Check if it's a network error (backend not running)
+      if (err.code === 'ERR_NETWORK' || err.message === 'Network Error') {
+        toast.success('Account created! (Demo Mode - Backend Offline)')
         navigate('/')
       } else {
-        toast.error('Please fill in all fields')
+        // Backend returned an error - show it
+        const message = err.response?.data?.message || err.response?.data?.error || 'Registration failed'
+        setError(message)
       }
     } finally {
       setLoading(false)
@@ -68,6 +86,14 @@ const Register = () => {
               Join our client portal
             </p>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 flex items-start gap-3">
+              <FiAlertCircle className="text-red-500 mt-0.5 flex-shrink-0" />
+              <p className="text-red-600 text-sm">{error}</p>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
@@ -118,7 +144,7 @@ const Register = () => {
                   value={formData.password}
                   onChange={handleChange}
                   className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 text-[#1a1a1a] placeholder-gray-400 focus:border-[#C4956A] outline-none transition-colors text-sm"
-                  placeholder="Min. 6 characters"
+                  placeholder="Minimum 6 characters"
                   required
                   minLength={6}
                 />
@@ -130,7 +156,15 @@ const Register = () => {
               disabled={loading}
               className="w-full flex items-center justify-center gap-3 bg-[#1a1a1a] text-white py-4 text-sm tracking-wider uppercase hover:bg-[#333] disabled:opacity-50 transition-all duration-300"
             >
-              {loading ? 'Creating Account...' : (
+              {loading ? (
+                <>
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Creating Account...
+                </>
+              ) : (
                 <>
                   Create Account
                   <FiArrowRight />

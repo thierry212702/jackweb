@@ -2,11 +2,12 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { FiMail, FiLock, FiArrowRight, FiUser } from 'react-icons/fi'
+import { FiMail, FiLock, FiArrowRight, FiUser, FiAlertCircle } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 
 const Login = () => {
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -15,25 +16,35 @@ const Login = () => {
   const navigate = useNavigate()
 
   const handleChange = (e) => {
+    setError('')
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+    setError('')
     
     try {
+      // Attempt real login through AuthContext
       await login(formData.email, formData.password)
-      toast.success('Welcome back!')
       navigate('/')
-    } catch (error) {
-      console.log('Demo login')
-      // Demo mode fallback
-      if (formData.email && formData.password) {
-        toast.success('Welcome back! (Demo Mode)')
-        navigate('/')
+    } catch (err) {
+      console.error('Login error:', err)
+      
+      // Check if it's a network error (backend not running)
+      if (err.code === 'ERR_NETWORK' || err.message === 'Network Error') {
+        // Backend is not running - use demo mode
+        if (formData.email === 'admin@lawyer.com' && formData.password === 'admin123') {
+          toast.success('Welcome back! (Demo Mode - Backend Offline)')
+          navigate('/')
+        } else {
+          setError('Backend is offline. Use demo credentials: admin@lawyer.com / admin123')
+        }
       } else {
-        toast.error('Please enter your credentials')
+        // Backend returned an error - show it
+        const message = err.response?.data?.message || err.response?.data?.error || 'Invalid email or password'
+        setError(message)
       }
     } finally {
       setLoading(false)
@@ -68,6 +79,14 @@ const Login = () => {
               Sign in to access your account
             </p>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 flex items-start gap-3">
+              <FiAlertCircle className="text-red-500 mt-0.5 flex-shrink-0" />
+              <p className="text-red-600 text-sm">{error}</p>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
@@ -111,7 +130,15 @@ const Login = () => {
               disabled={loading}
               className="w-full flex items-center justify-center gap-3 bg-[#1a1a1a] text-white py-4 text-sm tracking-wider uppercase hover:bg-[#333] disabled:opacity-50 transition-all duration-300"
             >
-              {loading ? 'Signing in...' : (
+              {loading ? (
+                <>
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Signing in...
+                </>
+              ) : (
                 <>
                   Sign In
                   <FiArrowRight />
