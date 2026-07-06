@@ -16,16 +16,16 @@ const Home = () => {
 
   const heroSlides = [
     {
-      image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1920&h=900&fit=crop',
-      alt: 'Historic legal building'
+      image: '/images/hero/jack4.jpg',
+      alt: 'MACJACK Legal Services'
     },
     {
-      image: 'https://images.unsplash.com/photo-1577415124269-f5d3f0cc0a4e?w=1920&h=900&fit=crop',
-      alt: 'Legal consultation room'
+      image: '/images/hero/jack2.jpg',
+      alt: 'Professional Legal Consultation'
     },
     {
-      image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1920&h=900&fit=crop',
-      alt: 'Professional legal office'
+      image: '/images/hero/jack1.jpg',
+      alt: 'Expert Legal Guidance'
     }
   ]
 
@@ -48,7 +48,7 @@ const Home = () => {
     if (isPaused) return
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
-    }, 6000)
+    }, 4000)
     return () => clearInterval(timer)
   }, [isPaused, heroSlides.length])
 
@@ -74,67 +74,75 @@ const Home = () => {
 
   const handleEnquiry = (e) => {
     e.preventDefault()
-    // Handle form submission
   }
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+  }, [])
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
+  }, [])
 
   return (
     <div className="overflow-hidden bg-white">
       
       {/* ==================== HERO SECTION ==================== */}
-      <section className="relative h-screen min-h-[700px]">
-        {/* Slideshow */}
+      <section className="relative h-screen min-h-[700px] bg-[#1a1a1a]">
+        <div className="absolute inset-0 bg-[#1a1a1a]" />
+        
         <div className="absolute inset-0">
           {heroSlides.map((slide, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-[2000ms] ease-in-out ${
-                currentSlide === index ? 'opacity-100' : 'opacity-0'
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
               }`}
             >
               <img
                 src={slide.image}
                 alt={slide.alt}
                 className="w-full h-full object-cover"
+                loading="eager"
               />
             </div>
           ))}
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-black/50 z-20" />
         </div>
 
-        {/* Slide Controls */}
-        <div className="absolute bottom-8 right-8 z-20 flex items-center gap-3">
+        <div className="absolute bottom-8 right-8 z-30 flex items-center gap-3">
           <button
-            onClick={() => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-            className="w-10 h-10 rounded-full border border-white/40 flex items-center justify-center text-white hover:bg-white/20 transition-all"
+            onClick={prevSlide}
+            className="w-12 h-12 rounded-full border border-white/40 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/60 transition-all duration-300"
+            aria-label="Previous slide"
           >
-            <FiChevronLeft />
+            <FiChevronLeft className="text-lg" />
           </button>
           <button
-            onClick={() => setCurrentSlide((prev) => (prev + 1) % heroSlides.length)}
-            className="w-10 h-10 rounded-full border border-white/40 flex items-center justify-center text-white hover:bg-white/20 transition-all"
+            onClick={nextSlide}
+            className="w-12 h-12 rounded-full border border-white/40 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/60 transition-all duration-300"
+            aria-label="Next slide"
           >
-            <FiChevronRight />
+            <FiChevronRight className="text-lg" />
           </button>
         </div>
 
-        {/* Slide Indicators */}
-        <div className="absolute bottom-8 left-8 z-20 flex gap-2">
+        <div className="absolute bottom-8 left-8 z-30 flex gap-3">
           {heroSlides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`h-[2px] transition-all duration-500 ${
+              className={`h-[2px] transition-all duration-300 ${
                 currentSlide === index 
                   ? 'w-10 bg-white' 
                   : 'w-5 bg-white/40 hover:bg-white/70'
               }`}
+              aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 h-full flex items-center">
+        <div className="relative z-30 h-full flex items-center">
           <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
             <div className="max-w-2xl">
               <h1 className="text-white text-5xl lg:text-6xl xl:text-7xl leading-[1.1] mb-6" 
@@ -162,7 +170,7 @@ const Home = () => {
             <p className="text-gray-600 text-lg lg:text-xl leading-relaxed mb-8 font-light">
               Situated in Belfast's historic Cathedral Quarter, we represent the interests of both 
               local and national clients. Over 200 years of dedicated service, legal expertise and 
-              commitment to our clients have led to Sarah Michelle being regarded as one of the 
+              commitment to our clients have led to MACJACK being regarded as one of the 
               region's most reputable and well respected law firms.
             </p>
             <p className="text-gray-600 text-lg lg:text-xl leading-relaxed font-light">
@@ -178,7 +186,6 @@ const Home = () => {
       {/* ==================== WHAT WE DO SECTION ==================== */}
       <section className="py-20 lg:py-28 bg-[#F8F6F3]">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          {/* Section Header */}
           <div className="mb-16">
             <p className="text-[#8B7355] text-sm tracking-[0.2em] uppercase mb-4">What we do</p>
             <h2 className="text-4xl lg:text-5xl text-[#1a1a1a] mb-8 max-w-3xl leading-tight" 
@@ -213,14 +220,8 @@ const Home = () => {
                 Expert commercial legal advice
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
-                At Sarah Michelle, we have specialised in providing pragmatic and appropriate 
-                legal advice to commercial businesses for many years. Our expertise in commercial 
-                legal matters makes us the ideal choice for anything from starting a new business 
-                venture to commercial contracts and restructuring.
-              </p>
-              <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
-                With many of our clients returning to us time and time again for expert legal 
-                advice, we are ideally placed to support their business needs.
+                At MACJACK, we have specialised in providing pragmatic and appropriate 
+                legal advice to commercial businesses for many years.
               </p>
               <Link
                 to="/businesses"
@@ -232,7 +233,7 @@ const Home = () => {
             </div>
             <div className="h-[400px] lg:h-[500px] overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=1000&fit=crop"
+                src="/images/business/jack5.jpg"
                 alt="Business legal services"
                 className="w-full h-full object-cover"
               />
@@ -247,7 +248,7 @@ const Home = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="h-[400px] lg:h-[500px] overflow-hidden order-2 lg:order-1">
               <img
-                src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=800&h=1000&fit=crop"
+                src="/images/individual/jack6.jpg"
                 alt="Individual legal services"
                 className="w-full h-full object-cover"
               />
@@ -259,15 +260,8 @@ const Home = () => {
                 Personal legal services with care
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
-                Alongside our professional commercial services, our team is also dedicated to 
-                providing sound and insightful advice to private individuals across a range of 
-                different legal areas.
-              </p>
-              <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
-                We handle each case with personalised service, empathy and professional care, 
-                from moving home to making a will, through to matrimonial and litigation matters. 
-                If you are looking for a client-focused and approachable legal team which adopts 
-                a common-sense approach, make us your first choice.
+                Our team is dedicated to providing sound and insightful advice to private 
+                individuals across a range of different legal areas.
               </p>
               <Link
                 to="/individuals"
@@ -314,8 +308,7 @@ const Home = () => {
                 How can we help?
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed font-light">
-                Send us your contact information and one of our team will be in touch to discuss 
-                your requirements.
+                Send us your contact information and one of our team will be in touch.
               </p>
             </div>
 
