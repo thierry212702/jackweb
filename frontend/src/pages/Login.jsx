@@ -58,7 +58,7 @@ const Login = () => {
         <div className="text-center mb-12">
           <Link to="/" className="inline-block">
             <h1 className="text-3xl text-[#1a1a1a] mb-1" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-              Sarah Michelle
+              jack's lawfirm
             </h1>
             <span className="text-xs text-gray-400 tracking-[0.3em] uppercase">
               Legal Services
