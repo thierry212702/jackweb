@@ -1,14 +1,18 @@
 // components/Navbar.jsx
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { FiMenu, FiX } from 'react-icons/fi'
+import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [businessOpen, setBusinessOpen] = useState(false)
+  const [individualOpen, setIndividualOpen] = useState(false)
   const { user, logout, isAdmin } = useAuth()
   const location = useLocation()
+  const businessRef = useRef(null)
+  const individualRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -16,12 +20,34 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinks = [
-    { path: '/businesses', label: 'For business' },
-    { path: '/individuals', label: 'For individuals' },
-    { path: '/about', label: 'About us' },
-    { path: '/what-we-do', label: 'What we do' },
-    { path: '/contact', label: 'Contact us' },
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (businessRef.current && !businessRef.current.contains(event.target)) {
+        setBusinessOpen(false)
+      }
+      if (individualRef.current && !individualRef.current.contains(event.target)) {
+        setIndividualOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const businessServices = [
+    { label: 'Real Estate', path: '/businesses' },
+    { label: 'Landlord & Tenant', path: '/businesses' },
+    { label: 'Restructuring & Finance', path: '/businesses' },
+    { label: 'Business Sales', path: '/businesses' },
+    { label: 'Start-ups & Contracts', path: '/businesses' },
+  ]
+
+  const individualServices = [
+    { label: 'Residential Conveyancing', path: '/individuals' },
+    { label: 'Wills, Trusts & Estate', path: '/individuals' },
+    { label: 'Mental Capacity', path: '/individuals' },
+    { label: 'Administration of Estates', path: '/individuals' },
+    { label: 'Matrimonial', path: '/individuals' },
+    { label: 'Dispute Resolution', path: '/individuals' },
   ]
 
   return (
@@ -32,7 +58,7 @@ const Navbar = () => {
     }`}>
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center">
-          {/* Logo - Always white */}
+          {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <h1 className="text-xl lg:text-2xl text-white font-medium" 
               style={{ fontFamily: "'Cormorant Garamond', serif" }}>
@@ -43,24 +69,74 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* Desktop Menu - Always white text */}
+          {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`text-sm transition-colors duration-300 ${
-                  location.pathname === link.path
-                    ? 'text-white font-medium'
-                    : 'text-white/80 hover:text-white'
-                }`}
+            {/* For Business Dropdown */}
+            <div ref={businessRef} className="relative">
+              <button
+                onMouseEnter={() => setBusinessOpen(true)}
+                onMouseLeave={() => setBusinessOpen(false)}
+                className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors duration-300"
               >
-                {link.label}
-              </Link>
-            ))}
+                For business
+                <FiChevronDown className={`text-xs transition-transform ${businessOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {businessOpen && (
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white shadow-xl py-2">
+                  {businessServices.map((service, index) => (
+                    <Link
+                      key={index}
+                      to={service.path}
+                      onClick={() => setBusinessOpen(false)}
+                      className="block px-5 py-2.5 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-gray-50 transition-colors"
+                    >
+                      {service.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* For Individuals Dropdown */}
+            <div ref={individualRef} className="relative">
+              <button
+                onMouseEnter={() => setIndividualOpen(true)}
+                onMouseLeave={() => setIndividualOpen(false)}
+                className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors duration-300"
+              >
+                For individuals
+                <FiChevronDown className={`text-xs transition-transform ${individualOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {individualOpen && (
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white shadow-xl py-2">
+                  {individualServices.map((service, index) => (
+                    <Link
+                      key={index}
+                      to={service.path}
+                      onClick={() => setIndividualOpen(false)}
+                      className="block px-5 py-2.5 text-sm text-gray-700 hover:text-[#8B7355] hover:bg-gray-50 transition-colors"
+                    >
+                      {service.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link to="/about" className="text-sm text-white/80 hover:text-white transition-colors duration-300">
+              About us
+            </Link>
+            <Link to="/what-we-do" className="text-sm text-white/80 hover:text-white transition-colors duration-300">
+              What we do
+            </Link>
+            <Link to="/contact" className="text-sm text-white/80 hover:text-white transition-colors duration-300">
+              Contact us
+            </Link>
           </div>
 
-          {/* Right Side - Auth only (no phone) */}
+          {/* Right Side - Auth */}
           <div className="hidden lg:flex items-center gap-6">
             {user ? (
               <div className="flex items-center gap-4">
@@ -86,7 +162,7 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Menu Toggle - White */}
+          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden text-2xl text-white"
@@ -95,20 +171,15 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu - Dark background with white text */}
+        {/* Mobile Menu */}
         {isOpen && (
           <div className="lg:hidden mt-6 pt-6 border-t border-white/20 bg-black/80 backdrop-blur-lg rounded-lg p-6">
             <div className="flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setIsOpen(false)}
-                  className="text-sm text-white/80 py-2 hover:text-white transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              <Link to="/businesses" className="text-sm text-white/80 py-2 hover:text-white">For business</Link>
+              <Link to="/individuals" className="text-sm text-white/80 py-2 hover:text-white">For individuals</Link>
+              <Link to="/about" className="text-sm text-white/80 py-2 hover:text-white">About us</Link>
+              <Link to="/what-we-do" className="text-sm text-white/80 py-2 hover:text-white">What we do</Link>
+              <Link to="/contact" className="text-sm text-white/80 py-2 hover:text-white">Contact us</Link>
               <div className="pt-4 border-t border-white/20">
                 {user ? (
                   <button
