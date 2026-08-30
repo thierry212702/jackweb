@@ -96,28 +96,43 @@ return (
 // Replace the entire hero section with this:
 // pages/Home.jsx - Update the Hero Section
 // Replace the entire hero section with this:
+// pages/Home.jsx - Update the Hero Section only
 
-{/* ==================== HERO SECTION - No gap at top ==================== */}
+{/* ==================== HERO SECTION - Fills Entire Screen ==================== */}
 <section 
   className="relative w-full overflow-hidden bg-[#1a1a1a]" 
   style={{ 
-    height: '100vh', 
+    height: '100vh',
     minHeight: '100vh',
-    marginTop: '-80px',  // Pull up to cover navbar area
-    paddingTop: '80px',  // Compensate for content
+    marginTop: '-80px',
+    paddingTop: '80px',
     position: 'relative'
   }}
 >
   
-  {/* Slideshow with slow fade + zoom effect */}
-  <div className="absolute inset-0" style={{ height: '100vh', top: 0, left: 0, right: 0, bottom: 0 }}>
+  {/* Slideshow - fills entire viewport */}
+  <div className="absolute inset-0" style={{ 
+    height: '100vh',
+    minHeight: '100vh',
+    top: 0, 
+    left: 0, 
+    right: 0, 
+    bottom: 0 
+  }}>
     {heroSlides.map((slide, index) => (
       <div
         key={index}
         className={`absolute inset-0 transition-opacity duration-[3000ms] ease-in-out ${
           currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
         }`}
-        style={{ height: '100vh', top: 0, left: 0, right: 0, bottom: 0 }}
+        style={{ 
+          height: '100vh',
+          minHeight: '100vh',
+          top: 0, 
+          left: 0, 
+          right: 0, 
+          bottom: 0 
+        }}
       >
         <img
           src={slide.image}
@@ -126,12 +141,24 @@ return (
             currentSlide === index ? 'scale-110' : 'scale-100'
           }`}
           loading="eager"
-          style={{ height: '100vh', width: '100%', objectFit: 'cover' }}
+          style={{ 
+            height: '100vh',
+            minHeight: '100vh',
+            width: '100%', 
+            objectFit: 'cover' 
+          }}
         />
       </div>
     ))}
-    {/* Dark overlay for text readability */}
-    <div className="absolute inset-0 bg-black/40 z-20" style={{ top: 0, left: 0, right: 0, bottom: 0 }} />
+    {/* Dark overlay */}
+    <div className="absolute inset-0 bg-black/40 z-20" style={{ 
+      top: 0, 
+      left: 0, 
+      right: 0, 
+      bottom: 0,
+      height: '100vh',
+      minHeight: '100vh'
+    }} />
   </div>
 
   {/* Slide Controls */}
@@ -168,8 +195,11 @@ return (
     ))}
   </div>
 
-  {/* Hero Content - Centered */}
-  <div className="relative z-30 h-full flex items-center justify-center" style={{ height: '100vh' }}>
+  {/* Hero Content - Centered vertically and horizontally */}
+  <div className="relative z-30 h-full flex items-center justify-center" style={{ 
+    height: '100vh',
+    minHeight: '100vh'
+  }}>
     <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
       <div className="max-w-3xl mx-auto text-center">
         <p className="text-white/70 text-sm tracking-[0.3em] uppercase mb-6 animate-fade-up">
