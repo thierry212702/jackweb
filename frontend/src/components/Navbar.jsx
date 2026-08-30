@@ -1,5 +1,5 @@
 // components/Navbar.jsx
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { FiMenu, FiX, FiPhone } from 'react-icons/fi'
@@ -11,7 +11,7 @@ const Navbar = () => {
   const location = useLocation()
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
+    const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -21,25 +21,28 @@ const Navbar = () => {
     { path: '/individuals', label: 'For individuals' },
     { path: '/about', label: 'About us' },
     { path: '/what-we-do', label: 'What we do' },
-    { path: '/news', label: 'News' },
     { path: '/contact', label: 'Contact us' },
   ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       scrolled 
         ? 'bg-white shadow-sm py-3' 
-        : 'bg-white/90 py-4'
+        : 'bg-transparent py-5'
     }`}>
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <h1 className="text-xl lg:text-2xl text-[#1a1a1a] font-medium" 
+            <h1 className={`text-xl lg:text-2xl font-medium transition-colors duration-500 ${
+              scrolled ? 'text-[#1a1a1a]' : 'text-white'
+            }`} 
               style={{ fontFamily: "'Cormorant Garamond', serif" }}>
               JACK GENTIL
             </h1>
-            <span className="hidden sm:block text-xs text-gray-400 tracking-[0.2em] uppercase">
+            <span className={`hidden sm:block text-xs tracking-[0.2em] uppercase transition-colors duration-500 ${
+              scrolled ? 'text-gray-400' : 'text-white/70'
+            }`}>
               Legal Services
             </span>
           </Link>
@@ -51,9 +54,13 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 className={`text-sm transition-colors duration-300 ${
-                  location.pathname === link.path
-                    ? 'text-[#8B7355]'
-                    : 'text-gray-700 hover:text-[#8B7355]'
+                  scrolled
+                    ? location.pathname === link.path
+                      ? 'text-[#8B7355]'
+                      : 'text-gray-700 hover:text-[#8B7355]'
+                    : location.pathname === link.path
+                      ? 'text-white font-medium'
+                      : 'text-white/80 hover:text-white'
                 }`}
               >
                 {link.label}
@@ -64,8 +71,10 @@ const Navbar = () => {
           {/* Right Side */}
           <div className="hidden lg:flex items-center gap-6">
             <a
-              href="tel:+442890243126"
-              className="text-sm text-gray-700 hover:text-[#8B7355] transition-colors flex items-center gap-2"
+              href="tel:+250798822311"
+              className={`text-sm transition-colors duration-300 flex items-center gap-2 ${
+                scrolled ? 'text-gray-700 hover:text-[#8B7355]' : 'text-white/80 hover:text-white'
+              }`}
             >
               <FiPhone className="text-sm" />
               +25 (0)798 822 311
@@ -74,13 +83,17 @@ const Navbar = () => {
             {user ? (
               <div className="flex items-center gap-4">
                 {isAdmin && (
-                  <Link to="/admin" className="text-sm text-gray-700 hover:text-[#8B7355] transition-colors">
+                  <Link to="/admin" className={`text-sm transition-colors duration-300 ${
+                    scrolled ? 'text-gray-700 hover:text-[#8B7355]' : 'text-white/80 hover:text-white'
+                  }`}>
                     Admin
                   </Link>
                 )}
                 <button
                   onClick={logout}
-                  className="text-sm text-gray-500 hover:text-red-600 transition-colors"
+                  className={`text-sm transition-colors duration-300 ${
+                    scrolled ? 'text-gray-500 hover:text-red-600' : 'text-white/70 hover:text-white'
+                  }`}
                 >
                   Sign Out
                 </button>
@@ -88,7 +101,9 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="text-sm text-gray-700 hover:text-[#8B7355] transition-colors"
+                className={`text-sm transition-colors duration-300 ${
+                  scrolled ? 'text-gray-700 hover:text-[#8B7355]' : 'text-white/80 hover:text-white'
+                }`}
               >
                 Client Portal
               </Link>
@@ -98,15 +113,17 @@ const Navbar = () => {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden text-2xl text-gray-700"
+            className={`lg:hidden text-2xl transition-colors duration-300 ${
+              scrolled ? 'text-gray-700' : 'text-white'
+            }`}
           >
             {isOpen ? <FiX /> : <FiMenu />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Always white background for readability */}
         {isOpen && (
-          <div className="lg:hidden mt-6 pt-6 border-t border-gray-200">
+          <div className="lg:hidden mt-6 pt-6 border-t border-gray-200 bg-white shadow-xl rounded-lg p-6">
             <div className="flex flex-col gap-3">
               {navLinks.map((link) => (
                 <Link
