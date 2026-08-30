@@ -98,22 +98,25 @@ return (
 // Replace the entire hero section with this:
 // pages/Home.jsx - Update the Hero Section only
 
-{/* ==================== HERO SECTION - Fills Entire Screen ==================== */}
+// pages/Home.jsx - Update the Hero Section only
+
+{/* ==================== HERO SECTION - Extended Height ==================== */}
 <section 
   className="relative w-full overflow-hidden bg-[#1a1a1a]" 
   style={{ 
-    height: '100vh',
-    minHeight: '100vh',
+    height: '110vh',  // Extended beyond viewport
+    minHeight: '110vh',
     marginTop: '-80px',
-    paddingTop: '80px',
-    position: 'relative'
+    paddingTop: '0',
+    position: 'relative',
+    paddingBottom: '10vh'  // Extra bottom padding
   }}
 >
   
-  {/* Slideshow - fills entire viewport */}
+  {/* Slideshow - fills entire extended area */}
   <div className="absolute inset-0" style={{ 
-    height: '100vh',
-    minHeight: '100vh',
+    height: '110vh',
+    minHeight: '110vh',
     top: 0, 
     left: 0, 
     right: 0, 
@@ -126,8 +129,8 @@ return (
           currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
         }`}
         style={{ 
-          height: '100vh',
-          minHeight: '100vh',
+          height: '110vh',
+          minHeight: '110vh',
           top: 0, 
           left: 0, 
           right: 0, 
@@ -142,8 +145,8 @@ return (
           }`}
           loading="eager"
           style={{ 
-            height: '100vh',
-            minHeight: '100vh',
+            height: '110vh',
+            minHeight: '110vh',
             width: '100%', 
             objectFit: 'cover' 
           }}
@@ -156,13 +159,13 @@ return (
       left: 0, 
       right: 0, 
       bottom: 0,
-      height: '100vh',
-      minHeight: '100vh'
+      height: '110vh',
+      minHeight: '110vh'
     }} />
   </div>
 
-  {/* Slide Controls */}
-  <div className="absolute bottom-10 right-10 z-30 flex items-center gap-3">
+  {/* Slide Controls - Positioned higher from bottom */}
+  <div className="absolute bottom-16 right-10 z-30 flex items-center gap-3" style={{ bottom: '8vh' }}>
     <button
       onClick={prevSlide}
       className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white hover:border-white/50 transition-all duration-300"
@@ -179,8 +182,8 @@ return (
     </button>
   </div>
 
-  {/* Slide Indicators */}
-  <div className="absolute bottom-10 left-10 z-30 flex gap-3">
+  {/* Slide Indicators - Positioned higher from bottom */}
+  <div className="absolute left-10 z-30 flex gap-3" style={{ bottom: '8vh' }}>
     {heroSlides.map((_, index) => (
       <button
         key={index}
@@ -195,10 +198,10 @@ return (
     ))}
   </div>
 
-  {/* Hero Content - Centered vertically and horizontally */}
+  {/* Hero Content - Centered */}
   <div className="relative z-30 h-full flex items-center justify-center" style={{ 
-    height: '100vh',
-    minHeight: '100vh'
+    height: '110vh',
+    minHeight: '110vh'
   }}>
     <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
       <div className="max-w-3xl mx-auto text-center">
