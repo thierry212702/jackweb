@@ -1,7 +1,7 @@
 // pages/Home.jsx
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { FiArrowRight, FiPhone, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+import { FiArrowRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { podcastAPI, bookAPI } from '../services/api'
 
 const Home = () => {
@@ -20,20 +20,20 @@ const Home = () => {
       image: '/images/hero/jack4.jpg',
       alt: 'JACK GENTIL Legal Services',
       title: 'Emeritus',
-      subtitle: 'Chief Justice Prof. RUGEJE Sam',
+      subtitle: 'Chief Justice Prof. RUGEGE Sam',
       description: 'Justice Sam Rugege retired in December of 2019, after serving eight years as Chief Justice and eight years as Deputy Chief Justice of the Supreme Court of Rwanda.'
     },
     {
       image: '/images/hero/jack2.jpg',
       alt: 'Professional Legal Consultation',
-      title: 'Senior Fellow-Rwanda',
+      title: '',
       subtitle: 'BERNADETTE UWICYEZA',
       description: 'Bernadette UWICYEZA is an ADR advisor to the Judiciary of Rwanda, responsible for the design and implementation of court-annexed mediation in the Rwandan court system.'
     },
     {
       image: '/images/hero/jack1.jpg',
       alt: 'Expert Legal Guidance',
-      title: 'Senior Fellow-Rwanda',
+      title: '',
       subtitle: 'HARRISON MUTABAZI',
       description: 'Harrison Mutabazi is a High Court Judge, who currently serves as an inspectorate of the Rwandan Supreme Court and as a judicial spokesperson for the Court.'
     }
@@ -54,7 +54,7 @@ const Home = () => {
     }
   ]
 
-  // Auto-advance slides with longer delay for reading (10 seconds)
+  // Auto-advance slides with 8-second delay
   useEffect(() => {
     if (isPaused) return
     const timer = setInterval(() => {
@@ -62,8 +62,8 @@ const Home = () => {
       setTimeout(() => {
         setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
         setTextVisible(true)
-      }, 1500)
-    }, 10000)
+      }, 1000)
+    }, 8000)
     return () => clearInterval(timer)
   }, [isPaused, heroSlides.length])
 
@@ -96,7 +96,7 @@ const Home = () => {
     setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
       setTextVisible(true)
-    }, 1500)
+    }, 1000)
   }, [])
 
   const prevSlide = useCallback(() => {
@@ -104,7 +104,7 @@ const Home = () => {
     setTimeout(() => {
       setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
       setTextVisible(true)
-    }, 1500)
+    }, 1000)
   }, [])
 
   return (
@@ -201,7 +201,7 @@ const Home = () => {
                 setTimeout(() => {
                   setCurrentSlide(index)
                   setTextVisible(true)
-                }, 1500)
+                }, 1000)
               }}
               className={`h-[2px] transition-all duration-500 ${
                 currentSlide === index 
@@ -213,14 +213,13 @@ const Home = () => {
           ))}
         </div>
 
-        {/* Hero Content - Exchanging Text */}
+        {/* Hero Content - Text Only (No Buttons) */}
         <div className="relative z-30 h-full flex items-center justify-center" style={{ 
           height: '110vh',
           minHeight: '110vh'
         }}>
           <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
             <div className="max-w-3xl mx-auto text-center">
-              {/* Text with fade transition */}
               <div className={`transition-all duration-1000 ease-in-out ${
                 textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
               }`}>
@@ -232,25 +231,9 @@ const Home = () => {
                   {heroSlides[currentSlide].title}<br />
                   <span className="italic font-light text-3xl lg:text-4xl xl:text-5xl">{heroSlides[currentSlide].subtitle}</span>
                 </h1>
-                <p className="text-white/70 text-base lg:text-lg leading-relaxed mb-10 max-w-2xl mx-auto font-light">
+                <p className="text-white/70 text-base lg:text-lg leading-relaxed max-w-2xl mx-auto font-light">
                   {heroSlides[currentSlide].description}
                 </p>
-                <div className="flex flex-wrap gap-4 justify-center">
-                  <Link
-                    to="/contact"
-                    className="group inline-flex items-center gap-3 bg-white text-[#1a1a1a] px-10 py-4 text-sm tracking-wider uppercase hover:bg-gray-100 transition-all duration-300"
-                  >
-                    Schedule Consultation
-                    <FiArrowRight className="group-hover:translate-x-2 transition-transform" />
-                  </Link>
-                  <Link
-                    to="/about"
-                    className="inline-flex items-center gap-3 border border-white/40 text-white px-10 py-4 text-sm tracking-wider uppercase hover:bg-white/10 transition-all duration-300"
-                  >
-                    More Details
-                    <FiArrowRight />
-                  </Link>
-                </div>
               </div>
             </div>
           </div>
