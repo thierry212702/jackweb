@@ -20,22 +20,22 @@ const Home = () => {
       image: '/images/hero/jack4.jpg',
       alt: 'JACK GENTIL Legal Services',
       title: 'Emeritus',
-      subtitle: 'chiesf justice prof.RUGEGE Sam',
-      description: 'Justice sam Rugege retired in December of 2019, after serving eight years as Chief Justice and eight years as Deputy Chief Justice of the Supreme Court of Rwanda.'
+      subtitle: 'Chief Justice Prof. RUGEJE Sam',
+      description: 'Justice Sam Rugege retired in December of 2019, after serving eight years as Chief Justice and eight years as Deputy Chief Justice of the Supreme Court of Rwanda.'
     },
     {
       image: '/images/hero/jack2.jpg',
       alt: 'Professional Legal Consultation',
       title: 'Senior Fellow-Rwanda',
       subtitle: 'BERNADETTE UWICYEZA',
-      description: 'Bernadette UWICYEZA  is an ADR advisor to the Judicialy of Rwanda, responsible for the design and implementation of court-annexed mediation in the Rwandan court system.'
+      description: 'Bernadette UWICYEZA is an ADR advisor to the Judiciary of Rwanda, responsible for the design and implementation of court-annexed mediation in the Rwandan court system.'
     },
     {
       image: '/images/hero/jack1.jpg',
       alt: 'Expert Legal Guidance',
       title: 'Senior Fellow-Rwanda',
       subtitle: 'HARRISON MUTABAZI',
-      description: 'Harrison Mutabazi is a High Court Judge,Who currently serves as an inspeectorate of the Rwandan Supreme Court and as a judicial spokesperson for the Court.'
+      description: 'Harrison Mutabazi is a High Court Judge, who currently serves as an inspectorate of the Rwandan Supreme Court and as a judicial spokesperson for the Court.'
     }
   ]
 
@@ -54,7 +54,7 @@ const Home = () => {
     }
   ]
 
-  // Auto-advance slides with text fade
+  // Auto-advance slides with longer delay for reading (10 seconds)
   useEffect(() => {
     if (isPaused) return
     const timer = setInterval(() => {
@@ -62,8 +62,8 @@ const Home = () => {
       setTimeout(() => {
         setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
         setTextVisible(true)
-      }, 800)
-    }, 6000)
+      }, 1500)
+    }, 10000)
     return () => clearInterval(timer)
   }, [isPaused, heroSlides.length])
 
@@ -96,7 +96,7 @@ const Home = () => {
     setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
       setTextVisible(true)
-    }, 800)
+    }, 1500)
   }, [])
 
   const prevSlide = useCallback(() => {
@@ -104,7 +104,7 @@ const Home = () => {
     setTimeout(() => {
       setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
       setTextVisible(true)
-    }, 800)
+    }, 1500)
   }, [])
 
   return (
@@ -201,7 +201,7 @@ const Home = () => {
                 setTimeout(() => {
                   setCurrentSlide(index)
                   setTextVisible(true)
-                }, 800)
+                }, 1500)
               }}
               className={`h-[2px] transition-all duration-500 ${
                 currentSlide === index 
@@ -221,18 +221,18 @@ const Home = () => {
           <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
             <div className="max-w-3xl mx-auto text-center">
               {/* Text with fade transition */}
-              <div className={`transition-all duration-700 ease-in-out ${
+              <div className={`transition-all duration-1000 ease-in-out ${
                 textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
               }`}>
                 <p className="text-white/70 text-sm tracking-[0.3em] uppercase mb-6">
                   Welcome to JACK GENTIL
                 </p>
-                <h1 className="text-white text-5xl lg:text-6xl xl:text-7xl leading-[1.1] mb-8" 
+                <h1 className="text-white text-4xl lg:text-5xl xl:text-6xl leading-[1.1] mb-6" 
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                   {heroSlides[currentSlide].title}<br />
-                  <span className="italic font-light">{heroSlides[currentSlide].subtitle}</span>
+                  <span className="italic font-light text-3xl lg:text-4xl xl:text-5xl">{heroSlides[currentSlide].subtitle}</span>
                 </h1>
-                <p className="text-white/70 text-lg lg:text-xl leading-relaxed mb-10 max-w-xl mx-auto font-light">
+                <p className="text-white/70 text-base lg:text-lg leading-relaxed mb-10 max-w-2xl mx-auto font-light">
                   {heroSlides[currentSlide].description}
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center">
