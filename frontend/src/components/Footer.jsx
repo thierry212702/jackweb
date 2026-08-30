@@ -76,7 +76,7 @@ const Footer = () => {
                   className="flex items-start gap-2 hover:text-white transition-colors break-all"
                 >
                   <FiMail className="text-[#C4956A] mt-1 flex-shrink-0" />
-                  niyonsabajaquesgentil2004@gmail.com
+                  jaquesgentil2004@gmail.com
                 </a>
               </li>
             </ul>

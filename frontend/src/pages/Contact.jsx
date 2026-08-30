@@ -167,7 +167,7 @@ const Contact = () => {
                     <h3 className="text-2xl text-[#1a1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Email us</h3>
                   </div>
                   <a href="mailto:niyonsabajaquesgentil2004@gmail.com" className="text-lg text-[#C4956A] hover:text-[#1a1a1a] transition-colors block ml-16 break-all">
-                    niyonsabajaquesgentil2004@gmail.com
+                    jaquesgentil2004@gmail.com
                   </a>
                 </div>
 
