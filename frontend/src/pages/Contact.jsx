@@ -1,4 +1,4 @@
-// pages/Contact.jsx
+// pages/Contact.jsx - Updated with jacquesgentil@gmail.com
 import { useState } from 'react'
 import { FiPhone, FiMapPin, FiMail, FiClock, FiSend } from 'react-icons/fi'
 import toast from 'react-hot-toast'
@@ -21,7 +21,7 @@ const Contact = () => {
       name: 'Rubavu - Gisenyi Office',
       address: 'Rubavu, Western Province, Rwanda',
       phone: '0798822311',
-      email: 'niyonsabajaquesgentil2004@gmail.com',
+      email: 'jacquesgentil@gmail.com',
       hours: 'Mon–Fri: 8:30 AM – 5:30 PM',
       embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.5!2d29.2584!3d-1.6792!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwNDAnNDUuMSJTIDI5wrAxNSczMC4yIkU!5e0!3m2!1sen!2srw!4v1690000000000'
     },
@@ -29,7 +29,7 @@ const Contact = () => {
       name: 'Kigali Office',
       address: 'Nyarugenge, Kigali, Rwanda',
       phone: '0798822311',
-      email: 'niyonsabajaquesgentil2004@gmail.com',
+      email: 'jacquesgentil@gmail.com',
       hours: 'Mon–Fri: 8:00 AM – 6:00 PM',
       embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.5!2d30.0619!3d-1.9441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwNTYnMzguOCJTIDMwwrAwMyc0Mi44IkU!5e0!3m2!1sen!2srw!4v1690000000000'
     },
@@ -37,7 +37,7 @@ const Contact = () => {
       name: 'Musanze Office',
       address: 'Musanze, Northern Province, Rwanda',
       phone: '0798822311',
-      email: 'niyonsabajaquesgentil2004@gmail.com',
+      email: 'jacquesgentil@gmail.com',
       hours: 'Mon–Fri: 8:30 AM – 5:00 PM',
       embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.2!2d29.6349!3d-1.4999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwMjknNTkuNiJTIDI5wrAzOCcwNS42IkU!5e0!3m2!1sen!2srw!4v1690000000000'
     }
@@ -166,8 +166,8 @@ const Contact = () => {
                     </div>
                     <h3 className="text-2xl text-[#1a1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Email us</h3>
                   </div>
-                  <a href="mailto:niyonsabajaquesgentil2004@gmail.com" className="text-lg text-[#C4956A] hover:text-[#1a1a1a] transition-colors block ml-16 break-all">
-                    jaquesgentil2004@gmail.com
+                  <a href="mailto:jacquesgentil@gmail.com" className="text-lg text-[#C4956A] hover:text-[#1a1a1a] transition-colors block ml-16">
+                    jacquesgentil@gmail.com
                   </a>
                 </div>
 
