@@ -19,23 +19,23 @@ const Home = () => {
     {
       image: '/images/hero/jack4.jpg',
       alt: 'JACK GENTIL Legal Services',
-      title: 'Legal counsel of',
-      subtitle: 'distinction',
-      description: 'Providing sophisticated legal guidance with integrity, precision, and an unwavering commitment to your success.'
+      title: 'Emeritus',
+      subtitle: 'chiesf justice prof.RUGEGE Sam',
+      description: 'Justice sam Rugege retired in December of 2019, after serving eight years as Chief Justice and eight years as Deputy Chief Justice of the Supreme Court of Rwanda.'
     },
     {
       image: '/images/hero/jack2.jpg',
       alt: 'Professional Legal Consultation',
-      title: 'Your trusted',
-      subtitle: 'legal partner',
-      description: 'Expert advice across commercial and private sectors. We listen, understand, and advocate passionately on your behalf.'
+      title: 'Senior Fellow-Rwanda',
+      subtitle: 'BERNADETTE UWICYEZA',
+      description: 'Bernadette UWICYEZA  is an ADR advisor to the Judicialy of Rwanda, responsible for the design and implementation of court-annexed mediation in the Rwandan court system.'
     },
     {
       image: '/images/hero/jack1.jpg',
       alt: 'Expert Legal Guidance',
-      title: 'Over 200 years of',
-      subtitle: 'excellence',
-      description: 'A legacy of dedicated service, legal expertise, and commitment to clients across generations.'
+      title: 'Senior Fellow-Rwanda',
+      subtitle: 'HARRISON MUTABAZI',
+      description: 'Harrison Mutabazi is a High Court Judge,Who currently serves as an inspeectorate of the Rwandan Supreme Court and as a judicial spokesperson for the Court.'
     }
   ]
 
