@@ -17,7 +17,7 @@ const Home = () => {
   const heroSlides = [
     {
       image: '/images/hero/jack4.jpg',
-      alt: 'MACJACK Legal Services'
+      alt: 'JACK GENTIL Legal Services'
     },
     {
       image: '/images/hero/jack2.jpg',
@@ -44,11 +44,12 @@ const Home = () => {
     }
   ]
 
+  // Slow auto-advance slides (every 7 seconds like Maclaines)
   useEffect(() => {
     if (isPaused) return
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
-    }, 4000)
+    }, 7000)
     return () => clearInterval(timer)
   }, [isPaused, heroSlides.length])
 
@@ -87,77 +88,99 @@ const Home = () => {
   return (
     <div className="overflow-hidden bg-white">
       
-      {/* ==================== HERO SECTION ==================== */}
-      <section className="relative h-screen min-h-[700px] bg-[#1a1a1a]">
-        <div className="absolute inset-0 bg-[#1a1a1a]" />
+      {/* ==================== HERO SECTION - Maclaines Style with Slow Fade + Zoom ==================== */}
+      <section className="relative h-screen min-h-[700px] bg-[#1a1a1a] overflow-hidden">
         
+        {/* Slideshow with slow fade + zoom effect */}
         <div className="absolute inset-0">
           {heroSlides.map((slide, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+              className={`absolute inset-0 transition-opacity duration-[3000ms] ease-in-out ${
                 currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
               }`}
             >
               <img
                 src={slide.image}
                 alt={slide.alt}
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-transform duration-[7000ms] ease-out ${
+                  currentSlide === index ? 'scale-110' : 'scale-100'
+                }`}
                 loading="eager"
               />
             </div>
           ))}
-          <div className="absolute inset-0 bg-black/50 z-20" />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/40 z-20" />
         </div>
 
-        <div className="absolute bottom-8 right-8 z-30 flex items-center gap-3">
+        {/* Slide Controls - Subtle Maclaines style */}
+        <div className="absolute bottom-10 right-10 z-30 flex items-center gap-3">
           <button
             onClick={prevSlide}
-            className="w-12 h-12 rounded-full border border-white/40 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/60 transition-all duration-300"
+            className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white hover:border-white/50 transition-all duration-300"
             aria-label="Previous slide"
           >
             <FiChevronLeft className="text-lg" />
           </button>
           <button
             onClick={nextSlide}
-            className="w-12 h-12 rounded-full border border-white/40 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/60 transition-all duration-300"
+            className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white hover:border-white/50 transition-all duration-300"
             aria-label="Next slide"
           >
             <FiChevronRight className="text-lg" />
           </button>
         </div>
 
-        <div className="absolute bottom-8 left-8 z-30 flex gap-3">
+        {/* Slide Indicators - Thin elegant lines */}
+        <div className="absolute bottom-10 left-10 z-30 flex gap-3">
           {heroSlides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`h-[2px] transition-all duration-300 ${
+              className={`h-[2px] transition-all duration-500 ${
                 currentSlide === index 
-                  ? 'w-10 bg-white' 
-                  : 'w-5 bg-white/40 hover:bg-white/70'
+                  ? 'w-12 bg-white' 
+                  : 'w-6 bg-white/40 hover:bg-white/70'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>
 
+        {/* Hero Content */}
         <div className="relative z-30 h-full flex items-center">
           <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
             <div className="max-w-2xl">
-              <h1 className="text-white text-5xl lg:text-6xl xl:text-7xl leading-[1.1] mb-6" 
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                MACJACK's law<br />
-                firm of choice<br />
-                for over trust
+              <p className="text-white/70 text-sm tracking-[0.3em] uppercase mb-6 animate-fade-up">
+                Welcome to JACK GENTIL
+              </p>
+              <h1 className="text-white text-5xl lg:text-6xl xl:text-7xl leading-[1.1] mb-8 animate-fade-up" 
+                style={{ fontFamily: "'Cormorant Garamond', serif", animationDelay: '0.3s' }}>
+                Legal counsel of<br />
+                <span className="italic font-light">distinction</span>
               </h1>
-              <Link
-                to="/about"
-                className="inline-flex items-center gap-2 text-white border border-white/40 px-8 py-3 text-sm tracking-wider uppercase hover:bg-white hover:text-gray-900 transition-all duration-300 mt-4"
-              >
-                More details
-                <FiArrowRight />
-              </Link>
+              <p className="text-white/70 text-lg lg:text-xl leading-relaxed mb-10 max-w-xl font-light animate-fade-up" 
+                style={{ animationDelay: '0.6s' }}>
+                Providing sophisticated legal guidance with integrity, precision, 
+                and an unwavering commitment to your success.
+              </p>
+              <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.9s' }}>
+                <Link
+                  to="/contact"
+                  className="group inline-flex items-center gap-3 bg-white text-[#1a1a1a] px-10 py-4 text-sm tracking-wider uppercase hover:bg-gray-100 transition-all duration-300"
+                >
+                  Schedule Consultation
+                  <FiArrowRight className="group-hover:translate-x-2 transition-transform" />
+                </Link>
+                <a
+                  href="tel:+250798822311"
+                  className="inline-flex items-center gap-3 border border-white/40 text-white px-10 py-4 text-sm tracking-wider uppercase hover:bg-white/10 transition-all duration-300"
+                >
+                  <FiPhone />
+                  +25 (0)798 822 311
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -168,9 +191,9 @@ const Home = () => {
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="max-w-4xl">
             <p className="text-gray-600 text-lg lg:text-xl leading-relaxed mb-8 font-light">
-              Situated in Belfast's historic Cathedral Quarter, we represent the interests of both 
+              Situated in the historic Cathedral Quarter, we represent the interests of both 
               local and national clients. Over 200 years of dedicated service, legal expertise and 
-              commitment to our clients have led to MACJACK being regarded as one of the 
+              commitment to our clients have led to JACK GENTIL being regarded as one of the 
               region's most reputable and well respected law firms.
             </p>
             <p className="text-gray-600 text-lg lg:text-xl leading-relaxed font-light">
@@ -195,8 +218,7 @@ const Home = () => {
             <p className="text-gray-600 text-lg leading-relaxed max-w-3xl font-light">
               With expertise across a wide range of practice areas, including property, commercial 
               matters, wills, trusts, family law and more, our highly trained and hand-picked team 
-              of solicitors is ready to help you. Our focus on long-term client loyalty, personal 
-              service and attention to detail in all we do sets us apart from our competitors.
+              of solicitors is ready to help you.
             </p>
             <Link
               to="/what-we-do"
@@ -220,7 +242,7 @@ const Home = () => {
                 Expert commercial legal advice
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
-                At MACJACK, we have specialised in providing pragmatic and appropriate 
+                At JACK GENTIL, we have specialised in providing pragmatic and appropriate 
                 legal advice to commercial businesses for many years.
               </p>
               <Link
