@@ -1,56 +1,92 @@
 // components/Footer.jsx
 import { Link } from 'react-router-dom'
-import { FiPhone } from 'react-icons/fi'
+import { FiPhone, FiMail, FiMapPin } from 'react-icons/fi'
 
 const Footer = () => {
   return (
     <footer className="bg-[#1a1a1a] text-white">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
-          {/* Navigation Links */}
-          <div className="lg:col-span-4 grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div>
-              <ul className="space-y-3">
-                <li><Link to="/businesses" className="text-white/60 text-sm hover:text-white transition-colors">For business</Link></li>
-                <li><Link to="/individuals" className="text-white/60 text-sm hover:text-white transition-colors">For individuals</Link></li>
-                <li><Link to="/about" className="text-white/60 text-sm hover:text-white transition-colors">About us</Link></li>
-              </ul>
-            </div>
-            <div>
-              <ul className="space-y-3">
-                <li><Link to="/what-we-do" className="text-white/60 text-sm hover:text-white transition-colors">What we do</Link></li>
-                <li><Link to="/news" className="text-white/60 text-sm hover:text-white transition-colors">News</Link></li>
-                <li><Link to="/contact" className="text-white/60 text-sm hover:text-white transition-colors">Contact us</Link></li>
-              </ul>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-white/80 text-sm font-medium mb-6 uppercase tracking-wider">
+              Navigation
+            </h4>
+            <ul className="space-y-3">
+              <li><Link to="/" className="text-white/60 text-sm hover:text-white transition-colors">Home</Link></li>
+              <li><Link to="/about" className="text-white/60 text-sm hover:text-white transition-colors">About us</Link></li>
+              <li><Link to="/what-we-do" className="text-white/60 text-sm hover:text-white transition-colors">What we do</Link></li>
+              <li><Link to="/contact" className="text-white/60 text-sm hover:text-white transition-colors">Contact us</Link></li>
+            </ul>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h4 className="text-white/80 text-sm font-medium mb-6 uppercase tracking-wider">
+              Our Services
+            </h4>
+            <ul className="space-y-3">
+              <li><Link to="/businesses" className="text-white/60 text-sm hover:text-white transition-colors">For Business</Link></li>
+              <li><Link to="/individuals" className="text-white/60 text-sm hover:text-white transition-colors">For Individuals</Link></li>
+              <li><Link to="/podcasts" className="text-white/60 text-sm hover:text-white transition-colors">Podcasts</Link></li>
+              <li><Link to="/books" className="text-white/60 text-sm hover:text-white transition-colors">Books</Link></li>
+            </ul>
+          </div>
+
+          {/* Locations */}
+          <div>
+            <h4 className="text-white/80 text-sm font-medium mb-6 uppercase tracking-wider">
+              Our Locations
+            </h4>
+            <ul className="space-y-3 text-white/60 text-sm">
+              <li className="flex items-start gap-2">
+                <FiMapPin className="text-[#C4956A] mt-1 flex-shrink-0" />
+                Rubavu - Gisenyi
+              </li>
+              <li className="flex items-start gap-2">
+                <FiMapPin className="text-[#C4956A] mt-1 flex-shrink-0" />
+                Kigali
+              </li>
+              <li className="flex items-start gap-2">
+                <FiMapPin className="text-[#C4956A] mt-1 flex-shrink-0" />
+                Musanze
+              </li>
+            </ul>
           </div>
 
           {/* Contact Info */}
-          <div className="lg:col-span-2">
-            <h4 className="text-white/80 text-sm font-medium mb-4">Registered Office</h4>
-            <address className="text-white/50 text-sm not-italic leading-relaxed mb-4">
-              Imperial Buildings,<br />
-              72 High Street, Belfast BT1 2BE
-            </address>
-            <a 
-              href="tel:+442890243126" 
-              className="text-white/60 text-sm hover:text-white transition-colors flex items-center gap-2"
-            >
-              <FiPhone className="text-sm" />
-              +44 (0)28 9024 3126
-            </a>
+          <div>
+            <h4 className="text-white/80 text-sm font-medium mb-6 uppercase tracking-wider">
+              Contact
+            </h4>
+            <ul className="space-y-3 text-white/60 text-sm">
+              <li>
+                <a 
+                  href="tel:0798822311" 
+                  className="flex items-center gap-2 hover:text-white transition-colors"
+                >
+                  <FiPhone className="text-[#C4956A] flex-shrink-0" />
+                  0798822311
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="mailto:niyonsabajaquesgentil2004@gmail.com" 
+                  className="flex items-start gap-2 hover:text-white transition-colors break-all"
+                >
+                  <FiMail className="text-[#C4956A] mt-1 flex-shrink-0" />
+                  niyonsabajaquesgentil2004@gmail.com
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-white/10 mt-12 pt-8">
-          <p className="text-white/30 text-xs leading-relaxed">
-            Sarah Michelle Legal Services is the trading name of Sarah Michelle Ltd a limited 
-            liability company registered in Northern Ireland under number NI701564 whose 
-            registered office is stated above.
-          </p>
-          <p className="text-white/20 text-xs mt-4">
-            &copy; {new Date().getFullYear()} Sarah Michelle Legal Services. All rights reserved.
+        {/* Bottom Bar - Centered Copyright */}
+        <div className="border-t border-white/10 mt-12 pt-8 text-center">
+          <p className="text-white/40 text-sm">
+            &copy; {new Date().getFullYear()} JACK GENTIL Legal Services. All rights reserved.
           </p>
         </div>
       </div>
