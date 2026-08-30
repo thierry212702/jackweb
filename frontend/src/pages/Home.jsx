@@ -27,14 +27,14 @@ const Home = () => {
       image: '/images/hero/jack2.jpg',
       alt: 'Professional Legal Consultation',
       title: '',
-      subtitle: 'BERNADETTE UWICYEZA',
+      subtitle: ' UWICYEZA Bernadette',
       description: 'Bernadette UWICYEZA is an ADR advisor to the Judiciary of Rwanda, responsible for the design and implementation of court-annexed mediation in the Rwandan court system.'
     },
     {
       image: '/images/hero/jack1.jpg',
       alt: 'Expert Legal Guidance',
       title: '',
-      subtitle: 'HARRISON MUTABAZI',
+      subtitle: 'MUTABAZI Harrison',
       description: 'Harrison Mutabazi is a High Court Judge, who currently serves as an inspectorate of the Rwandan Supreme Court and as a judicial spokesperson for the Court.'
     }
   ]
