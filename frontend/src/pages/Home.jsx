@@ -13,19 +13,29 @@ const Home = () => {
   const [enquiryType, setEnquiryType] = useState('')
   const [podcasts, setPodcasts] = useState([])
   const [books, setBooks] = useState([])
+  const [textVisible, setTextVisible] = useState(true)
 
   const heroSlides = [
     {
       image: '/images/hero/jack4.jpg',
-      alt: 'JACK GENTIL Legal Services'
+      alt: 'JACK GENTIL Legal Services',
+      title: 'Legal counsel of',
+      subtitle: 'distinction',
+      description: 'Providing sophisticated legal guidance with integrity, precision, and an unwavering commitment to your success.'
     },
     {
       image: '/images/hero/jack2.jpg',
-      alt: 'Professional Legal Consultation'
+      alt: 'Professional Legal Consultation',
+      title: 'Your trusted',
+      subtitle: 'legal partner',
+      description: 'Expert advice across commercial and private sectors. We listen, understand, and advocate passionately on your behalf.'
     },
     {
       image: '/images/hero/jack1.jpg',
-      alt: 'Expert Legal Guidance'
+      alt: 'Expert Legal Guidance',
+      title: 'Over 200 years of',
+      subtitle: 'excellence',
+      description: 'A legacy of dedicated service, legal expertise, and commitment to clients across generations.'
     }
   ]
 
@@ -44,12 +54,16 @@ const Home = () => {
     }
   ]
 
-  // Slow auto-advance slides (every 7 seconds like Maclaines)
+  // Auto-advance slides with text fade
   useEffect(() => {
     if (isPaused) return
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
-    }, 7000)
+      setTextVisible(false)
+      setTimeout(() => {
+        setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+        setTextVisible(true)
+      }, 800)
+    }, 6000)
     return () => clearInterval(timer)
   }, [isPaused, heroSlides.length])
 
@@ -78,171 +92,170 @@ const Home = () => {
   }
 
   const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+    setTextVisible(false)
+    setTimeout(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+      setTextVisible(true)
+    }, 800)
   }, [])
 
   const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
+    setTextVisible(false)
+    setTimeout(() => {
+      setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
+      setTextVisible(true)
+    }, 800)
   }, [])
 
-  // pages/Home.jsx - Update the Hero Section only
-// The rest of the page remains the same
-
-return (
+  return (
     <div className="overflow-hidden bg-white">
       
-      {/* ==================== HERO SECTION - Fills Entire Viewport ==================== */}
-      // pages/Home.jsx - Update the Hero Section only
-// Replace the entire hero section with this:
-// pages/Home.jsx - Update the Hero Section
-// Replace the entire hero section with this:
-// pages/Home.jsx - Update the Hero Section only
-
-// pages/Home.jsx - Update the Hero Section only
-
-{/* ==================== HERO SECTION - Extended Height ==================== */}
-<section 
-  className="relative w-full overflow-hidden bg-[#1a1a1a]" 
-  style={{ 
-    height: '110vh',  // Extended beyond viewport
-    minHeight: '110vh',
-    marginTop: '-80px',
-    paddingTop: '0',
-    position: 'relative',
-    paddingBottom: '10vh'  // Extra bottom padding
-  }}
->
-  
-  {/* Slideshow - fills entire extended area */}
-  <div className="absolute inset-0" style={{ 
-    height: '110vh',
-    minHeight: '110vh',
-    top: 0, 
-    left: 0, 
-    right: 0, 
-    bottom: 0 
-  }}>
-    {heroSlides.map((slide, index) => (
-      <div
-        key={index}
-        className={`absolute inset-0 transition-opacity duration-[3000ms] ease-in-out ${
-          currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
-        }`}
+      {/* ==================== HERO SECTION ==================== */}
+      <section 
+        className="relative w-full overflow-hidden bg-[#1a1a1a]" 
         style={{ 
+          height: '110vh', 
+          minHeight: '110vh',
+          marginTop: '-80px',
+          paddingTop: '0',
+          position: 'relative',
+          paddingBottom: '10vh'
+        }}
+      >
+        
+        {/* Slideshow */}
+        <div className="absolute inset-0" style={{ 
           height: '110vh',
           minHeight: '110vh',
           top: 0, 
           left: 0, 
           right: 0, 
           bottom: 0 
-        }}
-      >
-        <img
-          src={slide.image}
-          alt={slide.alt}
-          className={`w-full h-full object-cover transition-transform duration-[7000ms] ease-out ${
-            currentSlide === index ? 'scale-110' : 'scale-100'
-          }`}
-          loading="eager"
-          style={{ 
+        }}>
+          {heroSlides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-[3000ms] ease-in-out ${
+                currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
+              style={{ 
+                height: '110vh',
+                minHeight: '110vh',
+                top: 0, 
+                left: 0, 
+                right: 0, 
+                bottom: 0 
+              }}
+            >
+              <img
+                src={slide.image}
+                alt={slide.alt}
+                className={`w-full h-full object-cover transition-transform duration-[7000ms] ease-out ${
+                  currentSlide === index ? 'scale-110' : 'scale-100'
+                }`}
+                loading="eager"
+                style={{ 
+                  height: '110vh',
+                  minHeight: '110vh',
+                  width: '100%', 
+                  objectFit: 'cover' 
+                }}
+              />
+            </div>
+          ))}
+          <div className="absolute inset-0 bg-black/40 z-20" style={{ 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            bottom: 0,
             height: '110vh',
-            minHeight: '110vh',
-            width: '100%', 
-            objectFit: 'cover' 
-          }}
-        />
-      </div>
-    ))}
-    {/* Dark overlay */}
-    <div className="absolute inset-0 bg-black/40 z-20" style={{ 
-      top: 0, 
-      left: 0, 
-      right: 0, 
-      bottom: 0,
-      height: '110vh',
-      minHeight: '110vh'
-    }} />
-  </div>
-
-  {/* Slide Controls - Positioned higher from bottom */}
-  <div className="absolute bottom-16 right-10 z-30 flex items-center gap-3" style={{ bottom: '8vh' }}>
-    <button
-      onClick={prevSlide}
-      className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white hover:border-white/50 transition-all duration-300"
-      aria-label="Previous slide"
-    >
-      <FiChevronLeft className="text-lg" />
-    </button>
-    <button
-      onClick={nextSlide}
-      className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white hover:border-white/50 transition-all duration-300"
-      aria-label="Next slide"
-    >
-      <FiChevronRight className="text-lg" />
-    </button>
-  </div>
-
-  {/* Slide Indicators - Positioned higher from bottom */}
-  <div className="absolute left-10 z-30 flex gap-3" style={{ bottom: '8vh' }}>
-    {heroSlides.map((_, index) => (
-      <button
-        key={index}
-        onClick={() => setCurrentSlide(index)}
-        className={`h-[2px] transition-all duration-500 ${
-          currentSlide === index 
-            ? 'w-12 bg-white' 
-            : 'w-6 bg-white/40 hover:bg-white/70'
-        }`}
-        aria-label={`Go to slide ${index + 1}`}
-      />
-    ))}
-  </div>
-
-  {/* Hero Content - Centered */}
-  <div className="relative z-30 h-full flex items-center justify-center" style={{ 
-    height: '110vh',
-    minHeight: '110vh'
-  }}>
-    <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
-      <div className="max-w-3xl mx-auto text-center">
-        <p className="text-white/70 text-sm tracking-[0.3em] uppercase mb-6 animate-fade-up">
-          Welcome to JACK GENTIL
-        </p>
-        <h1 className="text-white text-5xl lg:text-6xl xl:text-7xl leading-[1.1] mb-8 animate-fade-up" 
-          style={{ fontFamily: "'Cormorant Garamond', serif", animationDelay: '0.3s' }}>
-          Legal counsel of<br />
-          <span className="italic font-light">distinction</span>
-        </h1>
-        <p className="text-white/70 text-lg lg:text-xl leading-relaxed mb-10 max-w-xl mx-auto font-light animate-fade-up" 
-          style={{ animationDelay: '0.6s' }}>
-          Providing sophisticated legal guidance with integrity, precision, 
-          and an unwavering commitment to your success.
-        </p>
-        <div className="flex flex-wrap gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.9s' }}>
-          <Link
-            to="/contact"
-            className="group inline-flex items-center gap-3 bg-white text-[#1a1a1a] px-10 py-4 text-sm tracking-wider uppercase hover:bg-gray-100 transition-all duration-300"
-          >
-            Schedule Consultation
-            <FiArrowRight className="group-hover:translate-x-2 transition-transform" />
-          </Link>
-          <Link
-            to="/about"
-            className="inline-flex items-center gap-3 border border-white/40 text-white px-10 py-4 text-sm tracking-wider uppercase hover:bg-white/10 transition-all duration-300"
-          >
-            More Details
-            <FiArrowRight />
-          </Link>
+            minHeight: '110vh'
+          }} />
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-      {/* ==================== REST OF THE PAGE (unchanged) ==================== */}
-      {/* Introduction, What We Do, Business, Individuals, News, Enquiry sections stay the same */}
 
-    
-  
+        {/* Slide Controls */}
+        <div className="absolute right-10 z-30 flex items-center gap-3" style={{ bottom: '8vh' }}>
+          <button
+            onClick={prevSlide}
+            className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white hover:border-white/50 transition-all duration-300"
+            aria-label="Previous slide"
+          >
+            <FiChevronLeft className="text-lg" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white hover:border-white/50 transition-all duration-300"
+            aria-label="Next slide"
+          >
+            <FiChevronRight className="text-lg" />
+          </button>
+        </div>
+
+        {/* Slide Indicators */}
+        <div className="absolute left-10 z-30 flex gap-3" style={{ bottom: '8vh' }}>
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                setTextVisible(false)
+                setTimeout(() => {
+                  setCurrentSlide(index)
+                  setTextVisible(true)
+                }, 800)
+              }}
+              className={`h-[2px] transition-all duration-500 ${
+                currentSlide === index 
+                  ? 'w-12 bg-white' 
+                  : 'w-6 bg-white/40 hover:bg-white/70'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Hero Content - Exchanging Text */}
+        <div className="relative z-30 h-full flex items-center justify-center" style={{ 
+          height: '110vh',
+          minHeight: '110vh'
+        }}>
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
+            <div className="max-w-3xl mx-auto text-center">
+              {/* Text with fade transition */}
+              <div className={`transition-all duration-700 ease-in-out ${
+                textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+              }`}>
+                <p className="text-white/70 text-sm tracking-[0.3em] uppercase mb-6">
+                  Welcome to JACK GENTIL
+                </p>
+                <h1 className="text-white text-5xl lg:text-6xl xl:text-7xl leading-[1.1] mb-8" 
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  {heroSlides[currentSlide].title}<br />
+                  <span className="italic font-light">{heroSlides[currentSlide].subtitle}</span>
+                </h1>
+                <p className="text-white/70 text-lg lg:text-xl leading-relaxed mb-10 max-w-xl mx-auto font-light">
+                  {heroSlides[currentSlide].description}
+                </p>
+                <div className="flex flex-wrap gap-4 justify-center">
+                  <Link
+                    to="/contact"
+                    className="group inline-flex items-center gap-3 bg-white text-[#1a1a1a] px-10 py-4 text-sm tracking-wider uppercase hover:bg-gray-100 transition-all duration-300"
+                  >
+                    Schedule Consultation
+                    <FiArrowRight className="group-hover:translate-x-2 transition-transform" />
+                  </Link>
+                  <Link
+                    to="/about"
+                    className="inline-flex items-center gap-3 border border-white/40 text-white px-10 py-4 text-sm tracking-wider uppercase hover:bg-white/10 transition-all duration-300"
+                  >
+                    More Details
+                    <FiArrowRight />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ==================== INTRODUCTION SECTION ==================== */}
       <section className="py-20 lg:py-28 bg-white">
