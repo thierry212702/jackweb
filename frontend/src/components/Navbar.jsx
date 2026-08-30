@@ -9,28 +9,15 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
   const [businessOpen, setBusinessOpen] = useState(false)
   const [individualOpen, setIndividualOpen] = useState(false)
+  const [mobileBusinessOpen, setMobileBusinessOpen] = useState(false)
+  const [mobileIndividualOpen, setMobileIndividualOpen] = useState(false)
   const { user, logout, isAdmin } = useAuth()
   const location = useLocation()
-  const businessRef = useRef(null)
-  const individualRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (businessRef.current && !businessRef.current.contains(event.target)) {
-        setBusinessOpen(false)
-      }
-      if (individualRef.current && !individualRef.current.contains(event.target)) {
-        setIndividualOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
   const businessServices = [
@@ -71,19 +58,32 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-8">
-            {/* For Business Dropdown */}
-            <div ref={businessRef} className="relative">
-              <button
-                onMouseEnter={() => setBusinessOpen(true)}
-                onMouseLeave={() => setBusinessOpen(false)}
+            {/* For Business Dropdown - Fixed hover handling */}
+            <div 
+              className="relative"
+              onMouseEnter={() => {
+                setBusinessOpen(true)
+                setIndividualOpen(false)
+              }}
+              onMouseLeave={() => setBusinessOpen(false)}
+            >
+              <Link
+                to="/businesses"
                 className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors duration-300"
               >
                 For business
-                <FiChevronDown className={`text-xs transition-transform ${businessOpen ? 'rotate-180' : ''}`} />
-              </button>
+                <FiChevronDown className={`text-xs transition-transform duration-300 ${businessOpen ? 'rotate-180' : ''}`} />
+              </Link>
               
-              {businessOpen && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white shadow-xl py-2">
+              {/* Dropdown - Visible on hover of parent div */}
+              <div 
+                className={`absolute top-full left-0 mt-0 w-64 bg-white shadow-2xl transition-all duration-300 ${
+                  businessOpen 
+                    ? 'opacity-100 visible translate-y-0' 
+                    : 'opacity-0 invisible -translate-y-2'
+                }`}
+              >
+                <div className="py-2">
                   {businessServices.map((service, index) => (
                     <Link
                       key={index}
@@ -95,22 +95,35 @@ const Navbar = () => {
                     </Link>
                   ))}
                 </div>
-              )}
+              </div>
             </div>
 
-            {/* For Individuals Dropdown */}
-            <div ref={individualRef} className="relative">
-              <button
-                onMouseEnter={() => setIndividualOpen(true)}
-                onMouseLeave={() => setIndividualOpen(false)}
+            {/* For Individuals Dropdown - Fixed hover handling */}
+            <div 
+              className="relative"
+              onMouseEnter={() => {
+                setIndividualOpen(true)
+                setBusinessOpen(false)
+              }}
+              onMouseLeave={() => setIndividualOpen(false)}
+            >
+              <Link
+                to="/individuals"
                 className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors duration-300"
               >
                 For individuals
-                <FiChevronDown className={`text-xs transition-transform ${individualOpen ? 'rotate-180' : ''}`} />
-              </button>
+                <FiChevronDown className={`text-xs transition-transform duration-300 ${individualOpen ? 'rotate-180' : ''}`} />
+              </Link>
               
-              {individualOpen && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white shadow-xl py-2">
+              {/* Dropdown - Visible on hover of parent div */}
+              <div 
+                className={`absolute top-full left-0 mt-0 w-64 bg-white shadow-2xl transition-all duration-300 ${
+                  individualOpen 
+                    ? 'opacity-100 visible translate-y-0' 
+                    : 'opacity-0 invisible -translate-y-2'
+                }`}
+              >
+                <div className="py-2">
                   {individualServices.map((service, index) => (
                     <Link
                       key={index}
@@ -122,7 +135,7 @@ const Navbar = () => {
                     </Link>
                   ))}
                 </div>
-              )}
+              </div>
             </div>
 
             <Link to="/about" className="text-sm text-white/80 hover:text-white transition-colors duration-300">
@@ -175,11 +188,60 @@ const Navbar = () => {
         {isOpen && (
           <div className="lg:hidden mt-6 pt-6 border-t border-white/20 bg-black/80 backdrop-blur-lg rounded-lg p-6">
             <div className="flex flex-col gap-3">
-              <Link to="/businesses" className="text-sm text-white/80 py-2 hover:text-white">For business</Link>
-              <Link to="/individuals" className="text-sm text-white/80 py-2 hover:text-white">For individuals</Link>
-              <Link to="/about" className="text-sm text-white/80 py-2 hover:text-white">About us</Link>
-              <Link to="/what-we-do" className="text-sm text-white/80 py-2 hover:text-white">What we do</Link>
-              <Link to="/contact" className="text-sm text-white/80 py-2 hover:text-white">Contact us</Link>
+              {/* Mobile Business Dropdown */}
+              <div>
+                <button
+                  onClick={() => setMobileBusinessOpen(!mobileBusinessOpen)}
+                  className="flex items-center justify-between w-full text-sm text-white/80 py-2 hover:text-white transition-colors"
+                >
+                  For business
+                  <FiChevronDown className={`text-xs transition-transform ${mobileBusinessOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {mobileBusinessOpen && (
+                  <div className="pl-4 mt-2 space-y-2">
+                    {businessServices.map((service, index) => (
+                      <Link
+                        key={index}
+                        to={service.path}
+                        onClick={() => setIsOpen(false)}
+                        className="block text-sm text-white/60 hover:text-white py-1 transition-colors"
+                      >
+                        {service.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Mobile Individual Dropdown */}
+              <div>
+                <button
+                  onClick={() => setMobileIndividualOpen(!mobileIndividualOpen)}
+                  className="flex items-center justify-between w-full text-sm text-white/80 py-2 hover:text-white transition-colors"
+                >
+                  For individuals
+                  <FiChevronDown className={`text-xs transition-transform ${mobileIndividualOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {mobileIndividualOpen && (
+                  <div className="pl-4 mt-2 space-y-2">
+                    {individualServices.map((service, index) => (
+                      <Link
+                        key={index}
+                        to={service.path}
+                        onClick={() => setIsOpen(false)}
+                        className="block text-sm text-white/60 hover:text-white py-1 transition-colors"
+                      >
+                        {service.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <Link to="/about" onClick={() => setIsOpen(false)} className="text-sm text-white/80 py-2 hover:text-white transition-colors">About us</Link>
+              <Link to="/what-we-do" onClick={() => setIsOpen(false)} className="text-sm text-white/80 py-2 hover:text-white transition-colors">What we do</Link>
+              <Link to="/contact" onClick={() => setIsOpen(false)} className="text-sm text-white/80 py-2 hover:text-white transition-colors">Contact us</Link>
+              
               <div className="pt-4 border-t border-white/20">
                 {user ? (
                   <button
