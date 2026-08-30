@@ -85,20 +85,32 @@ const Home = () => {
     setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
   }, [])
 
-  return (
+  // pages/Home.jsx - Update the Hero Section only
+// The rest of the page remains the same
+
+return (
     <div className="overflow-hidden bg-white">
       
-      {/* ==================== HERO SECTION - Full Screen from Top ==================== */}
-      <section className="relative h-screen min-h-[700px] bg-[#1a1a1a] overflow-hidden" style={{ marginTop: '-80px', paddingTop: '80px' }}>
+      {/* ==================== HERO SECTION - Fills Entire Viewport ==================== */}
+      <section 
+        className="relative w-full overflow-hidden bg-[#1a1a1a]" 
+        style={{ 
+          height: '100vh', 
+          minHeight: '100vh',
+          marginTop: '0',
+          paddingTop: '0'
+        }}
+      >
         
         {/* Slideshow with slow fade + zoom effect */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0" style={{ height: '100vh' }}>
           {heroSlides.map((slide, index) => (
             <div
               key={index}
               className={`absolute inset-0 transition-opacity duration-[3000ms] ease-in-out ${
                 currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
               }`}
+              style={{ height: '100vh' }}
             >
               <img
                 src={slide.image}
@@ -107,14 +119,15 @@ const Home = () => {
                   currentSlide === index ? 'scale-110' : 'scale-100'
                 }`}
                 loading="eager"
+                style={{ height: '100vh', objectFit: 'cover' }}
               />
             </div>
           ))}
           {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-black/40 z-20" />
+          <div className="absolute inset-0 bg-black/40 z-20" style={{ height: '100vh' }} />
         </div>
 
-        {/* Slide Controls - Subtle Maclaines style */}
+        {/* Slide Controls */}
         <div className="absolute bottom-10 right-10 z-30 flex items-center gap-3">
           <button
             onClick={prevSlide}
@@ -132,7 +145,7 @@ const Home = () => {
           </button>
         </div>
 
-        {/* Slide Indicators - Thin elegant lines */}
+        {/* Slide Indicators */}
         <div className="absolute bottom-10 left-10 z-30 flex gap-3">
           {heroSlides.map((_, index) => (
             <button
@@ -148,10 +161,10 @@ const Home = () => {
           ))}
         </div>
 
-        {/* Hero Content - Positioned below navbar */}
-        <div className="relative z-30 h-full flex items-center">
+        {/* Hero Content */}
+        <div className="relative z-30 h-full flex items-center" style={{ height: '100vh' }}>
           <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
-            <div className="max-w-2xl mt-20">
+            <div className="max-w-2xl">
               <p className="text-white/70 text-sm tracking-[0.3em] uppercase mb-6 animate-fade-up">
                 Welcome to JACK GENTIL
               </p>
@@ -185,6 +198,12 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* ==================== REST OF THE PAGE (unchanged) ==================== */}
+      {/* Introduction, What We Do, Business, Individuals, News, Enquiry sections stay the same */}
+
+    
+  
 
       {/* ==================== INTRODUCTION SECTION ==================== */}
       <section className="py-20 lg:py-28 bg-white">
