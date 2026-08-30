@@ -18,26 +18,26 @@ const Contact = () => {
 
   const locations = [
     {
-      name: 'Rubavu Office',
-      address: 'Avenue de la Paix, Rubavu, Western Province, Rwanda',
-      phone: '+250 788 123 456',
-      email: 'rubavu@macjack.com',
+      name: 'Rubavu - Gisenyi Office',
+      address: 'Rubavu, Western Province, Rwanda',
+      phone: '0798822311',
+      email: 'niyonsabajaquesgentil2004@gmail.com',
       hours: 'Mon–Fri: 8:30 AM – 5:30 PM',
       embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.5!2d29.2584!3d-1.6792!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwNDAnNDUuMSJTIDI5wrAxNSczMC4yIkU!5e0!3m2!1sen!2srw!4v1690000000000'
     },
     {
       name: 'Kigali Office',
-      address: 'KG 7 Avenue, Nyarugenge, Kigali, Rwanda',
-      phone: '+250 788 234 567',
-      email: 'kigali@macjack.com',
+      address: 'Nyarugenge, Kigali, Rwanda',
+      phone: '0798822311',
+      email: 'niyonsabajaquesgentil2004@gmail.com',
       hours: 'Mon–Fri: 8:00 AM – 6:00 PM',
       embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.5!2d30.0619!3d-1.9441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwNTYnMzguOCJTIDMwwrAwMyc0Mi44IkU!5e0!3m2!1sen!2srw!4v1690000000000'
     },
     {
       name: 'Musanze Office',
-      address: 'RN4 Road, Musanze, Northern Province, Rwanda',
-      phone: '+250 788 345 678',
-      email: 'musanze@macjack.com',
+      address: 'Musanze, Northern Province, Rwanda',
+      phone: '0798822311',
+      email: 'niyonsabajaquesgentil2004@gmail.com',
       hours: 'Mon–Fri: 8:30 AM – 5:00 PM',
       embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.2!2d29.6349!3d-1.4999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwMjknNTkuNiJTIDI5wrAzOCcwNS42IkU!5e0!3m2!1sen!2srw!4v1690000000000'
     }
@@ -62,6 +62,7 @@ const Contact = () => {
       setFormData({ service: '', firstName: '', surname: '', email: '', phone: '', message: '' })
     } catch (error) {
       toast.success('Thank you for your message. We will be in touch shortly.')
+      setFormData({ service: '', firstName: '', surname: '', email: '', phone: '', message: '' })
     } finally {
       setLoading(false)
     }
@@ -70,7 +71,8 @@ const Contact = () => {
   return (
     <div className="bg-white">
       
-      <section className="relative bg-[#1a1a1a] text-white py-28 lg:py-36">
+      {/* Hero Section */}
+      <section className="relative bg-[#1a1a1a] text-white pt-28 lg:pt-36 pb-20">
         <div className="absolute inset-0 opacity-20">
           <img src="/images/contact/jack.jpg" alt="Contact us" className="w-full h-full object-cover" />
         </div>
@@ -87,10 +89,12 @@ const Contact = () => {
         </div>
       </section>
 
+      {/* Contact Form and Info */}
       <section className="py-20 lg:py-28 bg-white">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
             
+            {/* Form */}
             <div>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -140,8 +144,10 @@ const Contact = () => {
               </form>
             </div>
 
+            {/* Contact Info */}
             <div>
               <div className="space-y-12">
+                {/* Call Us */}
                 <div>
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 bg-[#F8F6F3] rounded-full flex items-center justify-center">
@@ -149,9 +155,23 @@ const Contact = () => {
                     </div>
                     <h3 className="text-2xl text-[#1a1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Or give us a call</h3>
                   </div>
-                  <a href="tel:+442890243126" className="text-lg text-[#C4956A] hover:text-[#1a1a1a] transition-colors block ml-16">+44 (0)28 9024 3126</a>
+                  <a href="tel:0798822311" className="text-lg text-[#C4956A] hover:text-[#1a1a1a] transition-colors block ml-16">0798822311</a>
                 </div>
 
+                {/* Email */}
+                <div>
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 bg-[#F8F6F3] rounded-full flex items-center justify-center">
+                      <FiMail className="text-[#C4956A] text-xl" />
+                    </div>
+                    <h3 className="text-2xl text-[#1a1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Email us</h3>
+                  </div>
+                  <a href="mailto:niyonsabajaquesgentil2004@gmail.com" className="text-lg text-[#C4956A] hover:text-[#1a1a1a] transition-colors block ml-16 break-all">
+                    niyonsabajaquesgentil2004@gmail.com
+                  </a>
+                </div>
+
+                {/* Find Us */}
                 <div>
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 bg-[#F8F6F3] rounded-full flex items-center justify-center">
@@ -161,9 +181,13 @@ const Contact = () => {
                   </div>
                   
                   <div className="ml-16">
-                    <div className="flex gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-4">
                       {locations.map((loc, index) => (
-                        <button key={index} onClick={() => setSelectedLocation(index)} className={`px-4 py-2 text-sm transition-all ${selectedLocation === index ? 'bg-[#1a1a1a] text-white' : 'bg-[#F8F6F3] text-gray-600 hover:bg-gray-200'}`}>
+                        <button 
+                          key={index} 
+                          onClick={() => setSelectedLocation(index)} 
+                          className={`px-4 py-2 text-sm transition-all ${selectedLocation === index ? 'bg-[#1a1a1a] text-white' : 'bg-[#F8F6F3] text-gray-600 hover:bg-gray-200'}`}
+                        >
                           {loc.name.split(' ')[0]}
                         </button>
                       ))}
@@ -171,14 +195,35 @@ const Contact = () => {
 
                     <div className="mb-6">
                       <p className="text-[#1a1a1a] font-medium text-lg mb-2">{locations[selectedLocation].name}</p>
-                      <p className="text-gray-600 text-sm leading-relaxed mb-2"><FiMapPin className="inline mr-2 text-[#C4956A]" />{locations[selectedLocation].address}</p>
-                      <p className="text-gray-600 text-sm mb-2"><FiPhone className="inline mr-2 text-[#C4956A]" />{locations[selectedLocation].phone}</p>
-                      <p className="text-gray-600 text-sm mb-2"><FiMail className="inline mr-2 text-[#C4956A]" />{locations[selectedLocation].email}</p>
-                      <p className="text-gray-600 text-sm"><FiClock className="inline mr-2 text-[#C4956A]" />{locations[selectedLocation].hours}</p>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-2">
+                        <FiMapPin className="inline mr-2 text-[#C4956A]" />
+                        {locations[selectedLocation].address}
+                      </p>
+                      <p className="text-gray-600 text-sm mb-2">
+                        <FiPhone className="inline mr-2 text-[#C4956A]" />
+                        {locations[selectedLocation].phone}
+                      </p>
+                      <p className="text-gray-600 text-sm mb-2">
+                        <FiMail className="inline mr-2 text-[#C4956A]" />
+                        {locations[selectedLocation].email}
+                      </p>
+                      <p className="text-gray-600 text-sm">
+                        <FiClock className="inline mr-2 text-[#C4956A]" />
+                        {locations[selectedLocation].hours}
+                      </p>
                     </div>
 
                     <div className="w-full h-[300px] border border-gray-200">
-                      <iframe src={locations[selectedLocation].embedUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title={`${locations[selectedLocation].name} Location`} />
+                      <iframe 
+                        src={locations[selectedLocation].embedUrl} 
+                        width="100%" 
+                        height="100%" 
+                        style={{ border: 0 }} 
+                        allowFullScreen="" 
+                        loading="lazy" 
+                        referrerPolicy="no-referrer-when-downgrade" 
+                        title={`${locations[selectedLocation].name} Location`} 
+                      />
                     </div>
                   </div>
                 </div>
