@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { FiMenu, FiX, FiPhone } from 'react-icons/fi'
+import { FiMenu, FiX } from 'react-icons/fi'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -60,16 +60,8 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Right Side - Always white */}
+          {/* Right Side - Auth only (no phone) */}
           <div className="hidden lg:flex items-center gap-6">
-            <a
-              href="tel:+250798822311"
-              className="text-sm text-white/80 hover:text-white transition-colors flex items-center gap-2"
-            >
-              <FiPhone className="text-sm" />
-              +25 (0)798 822 311
-            </a>
-            
             {user ? (
               <div className="flex items-center gap-4">
                 {isAdmin && (

@@ -92,113 +92,116 @@ return (
     <div className="overflow-hidden bg-white">
       
       {/* ==================== HERO SECTION - Fills Entire Viewport ==================== */}
-      <section 
-        className="relative w-full overflow-hidden bg-[#1a1a1a]" 
-        style={{ 
-          height: '100vh', 
-          minHeight: '100vh',
-          marginTop: '0',
-          paddingTop: '0'
-        }}
+      // pages/Home.jsx - Update the Hero Section only
+// Replace the entire hero section with this:
+
+{/* ==================== HERO SECTION - Centered Text ==================== */}
+<section 
+  className="relative w-full overflow-hidden bg-[#1a1a1a]" 
+  style={{ 
+    height: '100vh', 
+    minHeight: '100vh',
+    marginTop: '0',
+    paddingTop: '0'
+  }}
+>
+  
+  {/* Slideshow with slow fade + zoom effect */}
+  <div className="absolute inset-0" style={{ height: '100vh' }}>
+    {heroSlides.map((slide, index) => (
+      <div
+        key={index}
+        className={`absolute inset-0 transition-opacity duration-[3000ms] ease-in-out ${
+          currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
+        }`}
+        style={{ height: '100vh' }}
       >
-        
-        {/* Slideshow with slow fade + zoom effect */}
-        <div className="absolute inset-0" style={{ height: '100vh' }}>
-          {heroSlides.map((slide, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-[3000ms] ease-in-out ${
-                currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
-              }`}
-              style={{ height: '100vh' }}
-            >
-              <img
-                src={slide.image}
-                alt={slide.alt}
-                className={`w-full h-full object-cover transition-transform duration-[7000ms] ease-out ${
-                  currentSlide === index ? 'scale-110' : 'scale-100'
-                }`}
-                loading="eager"
-                style={{ height: '100vh', objectFit: 'cover' }}
-              />
-            </div>
-          ))}
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-black/40 z-20" style={{ height: '100vh' }} />
-        </div>
+        <img
+          src={slide.image}
+          alt={slide.alt}
+          className={`w-full h-full object-cover transition-transform duration-[7000ms] ease-out ${
+            currentSlide === index ? 'scale-110' : 'scale-100'
+          }`}
+          loading="eager"
+          style={{ height: '100vh', objectFit: 'cover' }}
+        />
+      </div>
+    ))}
+    {/* Dark overlay for text readability */}
+    <div className="absolute inset-0 bg-black/40 z-20" style={{ height: '100vh' }} />
+  </div>
 
-        {/* Slide Controls */}
-        <div className="absolute bottom-10 right-10 z-30 flex items-center gap-3">
-          <button
-            onClick={prevSlide}
-            className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white hover:border-white/50 transition-all duration-300"
-            aria-label="Previous slide"
+  {/* Slide Controls */}
+  <div className="absolute bottom-10 right-10 z-30 flex items-center gap-3">
+    <button
+      onClick={prevSlide}
+      className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white hover:border-white/50 transition-all duration-300"
+      aria-label="Previous slide"
+    >
+      <FiChevronLeft className="text-lg" />
+    </button>
+    <button
+      onClick={nextSlide}
+      className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white hover:border-white/50 transition-all duration-300"
+      aria-label="Next slide"
+    >
+      <FiChevronRight className="text-lg" />
+    </button>
+  </div>
+
+  {/* Slide Indicators */}
+  <div className="absolute bottom-10 left-10 z-30 flex gap-3">
+    {heroSlides.map((_, index) => (
+      <button
+        key={index}
+        onClick={() => setCurrentSlide(index)}
+        className={`h-[2px] transition-all duration-500 ${
+          currentSlide === index 
+            ? 'w-12 bg-white' 
+            : 'w-6 bg-white/40 hover:bg-white/70'
+        }`}
+        aria-label={`Go to slide ${index + 1}`}
+      />
+    ))}
+  </div>
+
+  {/* Hero Content - Centered */}
+  <div className="relative z-30 h-full flex items-center justify-center" style={{ height: '100vh' }}>
+    <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
+      <div className="max-w-3xl mx-auto text-center">
+        <p className="text-white/70 text-sm tracking-[0.3em] uppercase mb-6 animate-fade-up">
+          Welcome to JACK GENTIL
+        </p>
+        <h1 className="text-white text-5xl lg:text-6xl xl:text-7xl leading-[1.1] mb-8 animate-fade-up" 
+          style={{ fontFamily: "'Cormorant Garamond', serif", animationDelay: '0.3s' }}>
+          Legal counsel of<br />
+          <span className="italic font-light">distinction</span>
+        </h1>
+        <p className="text-white/70 text-lg lg:text-xl leading-relaxed mb-10 max-w-xl mx-auto font-light animate-fade-up" 
+          style={{ animationDelay: '0.6s' }}>
+          Providing sophisticated legal guidance with integrity, precision, 
+          and an unwavering commitment to your success.
+        </p>
+        <div className="flex flex-wrap gap-4 justify-center animate-fade-up" style={{ animationDelay: '0.9s' }}>
+          <Link
+            to="/contact"
+            className="group inline-flex items-center gap-3 bg-white text-[#1a1a1a] px-10 py-4 text-sm tracking-wider uppercase hover:bg-gray-100 transition-all duration-300"
           >
-            <FiChevronLeft className="text-lg" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white hover:border-white/50 transition-all duration-300"
-            aria-label="Next slide"
+            Schedule Consultation
+            <FiArrowRight className="group-hover:translate-x-2 transition-transform" />
+          </Link>
+          <Link
+            to="/about"
+            className="inline-flex items-center gap-3 border border-white/40 text-white px-10 py-4 text-sm tracking-wider uppercase hover:bg-white/10 transition-all duration-300"
           >
-            <FiChevronRight className="text-lg" />
-          </button>
+            More Details
+            <FiArrowRight />
+          </Link>
         </div>
-
-        {/* Slide Indicators */}
-        <div className="absolute bottom-10 left-10 z-30 flex gap-3">
-          {heroSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`h-[2px] transition-all duration-500 ${
-                currentSlide === index 
-                  ? 'w-12 bg-white' 
-                  : 'w-6 bg-white/40 hover:bg-white/70'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative z-30 h-full flex items-center" style={{ height: '100vh' }}>
-          <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
-            <div className="max-w-2xl">
-              <p className="text-white/70 text-sm tracking-[0.3em] uppercase mb-6 animate-fade-up">
-                Welcome to JACK GENTIL
-              </p>
-              <h1 className="text-white text-5xl lg:text-6xl xl:text-7xl leading-[1.1] mb-8 animate-fade-up" 
-                style={{ fontFamily: "'Cormorant Garamond', serif", animationDelay: '0.3s' }}>
-                Legal counsel of<br />
-                <span className="italic font-light">distinction</span>
-              </h1>
-              <p className="text-white/70 text-lg lg:text-xl leading-relaxed mb-10 max-w-xl font-light animate-fade-up" 
-                style={{ animationDelay: '0.6s' }}>
-                Providing sophisticated legal guidance with integrity, precision, 
-                and an unwavering commitment to your success.
-              </p>
-              <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.9s' }}>
-                <Link
-                  to="/contact"
-                  className="group inline-flex items-center gap-3 bg-white text-[#1a1a1a] px-10 py-4 text-sm tracking-wider uppercase hover:bg-gray-100 transition-all duration-300"
-                >
-                  Schedule Consultation
-                  <FiArrowRight className="group-hover:translate-x-2 transition-transform" />
-                </Link>
-                <a
-                  href="tel:+250798822311"
-                  className="inline-flex items-center gap-3 border border-white/40 text-white px-10 py-4 text-sm tracking-wider uppercase hover:bg-white/10 transition-all duration-300"
-                >
-                  <FiPhone />
-                  +25 (0)798 822 311
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      </div>
+    </div>
+  </div>
+</section>
       {/* ==================== REST OF THE PAGE (unchanged) ==================== */}
       {/* Introduction, What We Do, Business, Individuals, News, Enquiry sections stay the same */}
 
