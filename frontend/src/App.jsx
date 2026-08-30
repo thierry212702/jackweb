@@ -1,4 +1,4 @@
-// App.jsx - Simplified version
+// App.jsx
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -23,10 +23,10 @@ import WhatWeDo from './pages/WhatWeDo'
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white" style={{ margin: 0, padding: 0 }}>
       <Navbar />
-      {/* Removed pt-20 so hero section starts from the very top */}
-      <main className="flex-grow">
+      {/* No padding - hero starts from very top */}
+      <main className="flex-grow" style={{ marginTop: 0, paddingTop: 0 }}>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />

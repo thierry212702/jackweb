@@ -94,27 +94,30 @@ return (
       {/* ==================== HERO SECTION - Fills Entire Viewport ==================== */}
       // pages/Home.jsx - Update the Hero Section only
 // Replace the entire hero section with this:
+// pages/Home.jsx - Update the Hero Section
+// Replace the entire hero section with this:
 
-{/* ==================== HERO SECTION - Centered Text ==================== */}
+{/* ==================== HERO SECTION - No gap at top ==================== */}
 <section 
   className="relative w-full overflow-hidden bg-[#1a1a1a]" 
   style={{ 
     height: '100vh', 
     minHeight: '100vh',
-    marginTop: '0',
-    paddingTop: '0'
+    marginTop: '-80px',  // Pull up to cover navbar area
+    paddingTop: '80px',  // Compensate for content
+    position: 'relative'
   }}
 >
   
   {/* Slideshow with slow fade + zoom effect */}
-  <div className="absolute inset-0" style={{ height: '100vh' }}>
+  <div className="absolute inset-0" style={{ height: '100vh', top: 0, left: 0, right: 0, bottom: 0 }}>
     {heroSlides.map((slide, index) => (
       <div
         key={index}
         className={`absolute inset-0 transition-opacity duration-[3000ms] ease-in-out ${
           currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
         }`}
-        style={{ height: '100vh' }}
+        style={{ height: '100vh', top: 0, left: 0, right: 0, bottom: 0 }}
       >
         <img
           src={slide.image}
@@ -123,12 +126,12 @@ return (
             currentSlide === index ? 'scale-110' : 'scale-100'
           }`}
           loading="eager"
-          style={{ height: '100vh', objectFit: 'cover' }}
+          style={{ height: '100vh', width: '100%', objectFit: 'cover' }}
         />
       </div>
     ))}
     {/* Dark overlay for text readability */}
-    <div className="absolute inset-0 bg-black/40 z-20" style={{ height: '100vh' }} />
+    <div className="absolute inset-0 bg-black/40 z-20" style={{ top: 0, left: 0, right: 0, bottom: 0 }} />
   </div>
 
   {/* Slide Controls */}
