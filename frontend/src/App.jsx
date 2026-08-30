@@ -25,7 +25,8 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
-      <main className="flex-grow pt-20">
+      {/* Removed pt-20 so hero section starts from the very top */}
+      <main className="flex-grow">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />

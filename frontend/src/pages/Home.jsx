@@ -88,8 +88,8 @@ const Home = () => {
   return (
     <div className="overflow-hidden bg-white">
       
-      {/* ==================== HERO SECTION - Maclaines Style with Slow Fade + Zoom ==================== */}
-      <section className="relative h-screen min-h-[700px] bg-[#1a1a1a] overflow-hidden">
+      {/* ==================== HERO SECTION - Full Screen from Top ==================== */}
+      <section className="relative h-screen min-h-[700px] bg-[#1a1a1a] overflow-hidden" style={{ marginTop: '-80px', paddingTop: '80px' }}>
         
         {/* Slideshow with slow fade + zoom effect */}
         <div className="absolute inset-0">
@@ -148,10 +148,10 @@ const Home = () => {
           ))}
         </div>
 
-        {/* Hero Content */}
+        {/* Hero Content - Positioned below navbar */}
         <div className="relative z-30 h-full flex items-center">
           <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
-            <div className="max-w-2xl">
+            <div className="max-w-2xl mt-20">
               <p className="text-white/70 text-sm tracking-[0.3em] uppercase mb-6 animate-fade-up">
                 Welcome to JACK GENTIL
               </p>
